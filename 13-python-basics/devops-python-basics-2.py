@@ -28,7 +28,9 @@ def validate_and_execute():
             print("You entered a negative number. Enter a positive number.")
     except ValueError:
         print("Error: Your input is not a valid number.")
-
+    # Alternatively
+    # except Exception as e:
+    #   print(f"Error: Your input is not a valid number. Error is {e}")
 
 # Basic list operations
 def basic_list_operations():
