@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "#{ENV['HOME']}/.config/starship.toml", destination: ".config/starship.toml"
   end
 
-  # Copy your nushell config
+  # Copy your nushell config (uses Windows locations)
   if File.exists?(File.expand_path("#{ENV['HOME']}/AppData/Roaming/nushell/config.nu"))
     config.vm.provision "file", source: "#{ENV['HOME']}/AppData/Roaming/nushell/config.nu", destination: ".config/nushell/config.nu"
   end
