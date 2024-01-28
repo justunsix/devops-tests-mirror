@@ -2,7 +2,7 @@
 
 This directory contains a `Vagrantfile` that is configured to run an Ubuntu virtual machine (VM) with some Nix packages installed.
 
-It can be used as a base to install other software in the VM. 
+It can be used as a base to install other software in the VM.
 
 ## Prerequisites
 
