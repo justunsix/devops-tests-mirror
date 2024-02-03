@@ -10,8 +10,14 @@ install: ## Install NixOS vagrant plugin
 run: ## Run NixOS Virtual Machine
 	vagrant up
 
+stop: ## Stop NixOS Virtual Machine
+	vagrant halt
+
 init: install ## Create Vagrantfile for NixOS Virtual Machine if not present
 	vagrant init nixbox/nixos --box-version 23.11
+
+reload: ## Reload NixOS Virtual Machine
+	vagrant reload --provision
 
 clean: ## Destroy NixOS Virtual Machine
 	vagrant destroy
