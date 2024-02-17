@@ -3,7 +3,7 @@
 This directory contains `Vagrantfile`s for different virtual machines.
 
 - Ubuntu virtual machine (VM) with some Nix packages installed.
-- NixOS VM
+- In `nixos` directory, a NixOS VM
 
 It can be used as a base to install other software in the VM.
 
@@ -27,6 +27,7 @@ To use this project, follow these steps:
 - Run the command `vagrant up` to start the virtual machine.
 - Once the machine is up and running, you can use `vagrant ssh` to connect to it.
 - When done, use `vagrant halt` to turn off the machine.
+- To clean up and remove the machine, use `vagrant destroy`. This step will remove the machine and all its data.
 
 ### About the Ubuntu Vagrantfile
 
