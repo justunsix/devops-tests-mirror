@@ -394,3 +394,8 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/python,terraform,gradle,maven,ansible,emacs,pycharm+all
+
+# Other
+
+# Terraform plan files
+tfplan
