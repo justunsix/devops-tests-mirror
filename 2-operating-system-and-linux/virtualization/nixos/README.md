@@ -4,7 +4,8 @@ Set up a NixOS VM using Vagrant using [nix box](https://github.com/nix-community
 
 ## Pre-requisites
 
-- Vagrant, Virtualbox
+- [Vagrant](https://www.vagrantup.com/)
+- [VirtualBox](https://www.virtualbox.org/)
 - [vagrant-nixos-plugin](https://github.com/nix-community/vagrant-nixos-plugin)
 
 ## Usage
