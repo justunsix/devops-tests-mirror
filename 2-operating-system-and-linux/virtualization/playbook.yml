@@ -15,3 +15,11 @@
         - nixpkgs.zoxide
         - nixpkgs.nushell
         - nixpkgs.starship
+        - nixpkgs.carapace
+        - nixpkgs.broot
+        - nixpkgs.atuin
+    # Run broot --install in shell, run as user
+    - name: Run broot --install
+      ansible.builtin.command: "/home/vagrant/.nix-profile/bin/broot --install"
+      become: true
+      become_user: vagrant
