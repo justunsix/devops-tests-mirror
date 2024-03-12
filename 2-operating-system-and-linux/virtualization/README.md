@@ -2,9 +2,11 @@
 
 This directory contains `Vagrantfile`s for different virtual machines.
 
-- In this direction, `Vagrantfile` creating an Ubuntu virtual machine (VM) with some Nix packages installed.
+- In this directory, `Vagrantfile` creating an Ubuntu virtual machine (VM) with some Nix packages installed.
+  - In `ubuntu-nix-home-manager` directory, a similar virtual machine in the `Vagrantfile` except uses [home-manager](https://github.com/nix-community/home-manager) and home.nix configuration file to set which programs to install instead of putting in Ansible playbook
 - In `nixos` directory, `Vagrantfile` creating a NixOS VM
 - In `ubuntu-desktop` directory, `Vagrantfile` creating an Ubuntu VM with a desktop graphical user interface (GUI) environment
+
 
 VMs can be used as a base to install other software in the VM.
 

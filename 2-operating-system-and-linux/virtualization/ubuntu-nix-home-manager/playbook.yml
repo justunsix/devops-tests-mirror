@@ -1,0 +1,8 @@
+# Install Nix package manager
+# From https://github.com/danielrolls/nix-install
+# hostname for Vagrant is usually default
+- hosts: all
+  roles:
+    - role: danielrolls.nix
+      nix_commands:
+      - "nix-shell -p nix-info --command nix-info"
