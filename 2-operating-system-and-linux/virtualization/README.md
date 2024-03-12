@@ -41,7 +41,9 @@ To use this project, follow these steps:
 
 ## See Also
 
-- [gusztavvargadr / workstations](https://github.com/gusztavvargadr/workstations) for Windows Virtual Machines (VM)
+- Windows:
+  - [gusztavvargadr / workstations](https://github.com/gusztavvargadr/workstations) for development Windows Virtual Machines
+  - [gusztavvargadr / packer Wiki](https://github.com/gusztavvargadr/packer/wiki) for ready to use images
 - Ubuntu Desktops:
   - [Aufbau-einer-Smarthome-Security-Umgebung](https://github.com/Simon-Str/Aufbau-einer-Smarthome-Security-Umgebung) - VM configured with Ubuntu, GUI interface, and Ansible playbook.
   - [ubuntu-config-scripts](https://github.com/yaphott/ubuntu-config-scripts)
