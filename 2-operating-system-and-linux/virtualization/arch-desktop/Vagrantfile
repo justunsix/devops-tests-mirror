@@ -53,7 +53,7 @@ systemctl start sddm
 # Optional - Sound configuration
 pacman -S --noconfirm alsa-utils 
 # unmute sound and set volume to 100%
-amixer sset Master 100%+ unmute
+# amixer sset Master 100%+ unmute
 alsactl store
 # PulseAudio seems to remove crackling sound, YMMV
 # pacman -S --noconfirm pulseaudio pulseaudio-alsa
@@ -62,21 +62,25 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
-  config.vm.provider "virtualbox" do |v|
+  config.vm.provider "virtualbox" do |vb|
     # https://www.vagrantup.com/docs/providers/virtualbox/configuration
-    v.gui = true
-    v.name = "Archlinux_GUI"
-    v.linked_clone = true
-    v.check_guest_additions = true
+    vb.gui = true
+    vb.name = "Archlinux_GUI"
+    vb.linked_clone = true
+    vb.check_guest_additions = true
     # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-    v.customize ["modifyvm", :id, "--vram", "64"] #video ram in MB
-    v.memory = 2048
-    v.cpus = 2
+    vb.customize ["modifyvm", :id, "--vram", "64"] #video ram in MB
+    vb.memory = 2048
+    vb.cpus = 2
     # Enable bidirectional clipboard sharing
-    v.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+    vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
     # Enable bidirectional drag and drop
-    v.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
- 
+    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
+    # Enable audio 
+    # - dsound for Windows DirectSound, alsa for Linux, or coreaudio for macOS
+    vb.customize ["modifyvm", :id, "--audio", "dsound"]
+    vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
+    
   end
   config.vm.provision "shell", inline: $script
 
