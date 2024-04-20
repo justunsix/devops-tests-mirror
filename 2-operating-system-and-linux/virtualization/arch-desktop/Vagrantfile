@@ -69,7 +69,8 @@ Vagrant.configure("2") do |config|
     vb.linked_clone = true
     vb.check_guest_additions = true
     # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-    vb.customize ["modifyvm", :id, "--vram", "64"] #video ram in MB
+    # Video ram in MB, increase to 128 and increase memory to 4096 for more graphical applications like browser
+    vb.customize ["modifyvm", :id, "--vram", "64"] 
     vb.memory = 2048
     vb.cpus = 2
     # Enable bidirectional clipboard sharing
