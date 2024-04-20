@@ -8,26 +8,23 @@
 Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/jammy64"
-  config.vm.hostname = "ubuntu-yt"
+  config.vm.hostname = "ubuntu-nhm"
 
   ############################################################
   # Copy some host files to configure VM like the host
   ############################################################
 
-  # Copy your Starsip config file for prompt
+  # Starsip config for prompt
   if File.exists?(File.expand_path("#{ENV['HOME']}/.config/starship.toml"))
     config.vm.provision "file", source: "#{ENV['HOME']}/.config/starship.toml", destination: ".config/starship.toml"
   end
 
-  # Copy your nushell config (uses Windows locations)
-  if File.exists?(File.expand_path("#{ENV['HOME']}/AppData/Roaming/nushell/config.nu"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/AppData/Roaming/nushell/config.nu", destination: ".config/nushell/config.nu"
-  end
-  if File.exists?(File.expand_path("#{ENV['HOME']}/AppData/Roaming/nushell/config-nix.nu"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/AppData/Roaming/nushell/config-nix.nu", destination: ".config/nushell/config-nix.nu"
+  # nushell config from a dotfiles repo for shell
+  if File.exists?(File.expand_path("#{ENV['HOME']}/Code/dotfiles/.config/nushell"))
+    config.vm.provision "file", source: "#{ENV['HOME']}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
   end
 
-  # Copy fish config
+  # fish config for shell
   if File.exists?(File.expand_path("#{ENV['HOME']}/.config/fish/config.fish"))
     config.vm.provision "file", source: "#{ENV['HOME']}/.config/fish/config.fish", destination: ".config/fish/config.fish"
   end
