@@ -1,0 +1,63 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile based on https://bbs.archlinux.org/viewtopic.php?id=260017
+# created by gwpl
+# Changes were made:
+# - Use KDE Plasma desktop environment option
+# - Added Virtualbox clipboard and drag, drop sharing
+# - Additional comments on script steps
+
+$script = <<-'SCRIPT'
+
+# Update system
+pacman --noconfirm -Syyu
+# pacman --noconfirm -S vim htop git hwinfo
+# Before installing virtualbox packages, you need to remove -nox one
+pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,dkms,iso}
+# Install X.Org server, graphical packages
+pacman --noconfirm -S \
+                      xorg-server{,-common,-xwayland} \
+                      xorg-xinit \
+                      xf86-video-{fbdev,vesa} \
+                      xorg-xcalc xterm xrandr
+
+# Track VM creation time                      
+date > /etc/vagrant_provisioned_at
+# Add vagrant user to video group
+gpasswd -a vagrant video
+# Install desktop environment / display manager
+# Option - fluxbox
+# pacman --noconfirm -S fluxbox awesome && echo startfluxbox > /home/vagrant/.xinitrc
+# Option - If someone likes kde: 
+pacman --noconfirm -S plasma-desktop konsole dolphin kscreen && echo startplasma-x11 > /home/vagrant/.xinitrc
+chown vagrant:vagrant /home/vagrant/.xinitrc 
+# it looks like at this stage there is no /home/vagrant, so making .xinitrc may be required to be done manually
+
+# Set up Simple Desktop Display Manager (SDDM) login screen for X11 and Wayland
+pacman --noconfirm -S sddm
+systemctl enable sddm
+systemctl start sddm
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux/archlinux"
+  config.vm.provider "virtualbox" do |v|
+    # https://www.vagrantup.com/docs/providers/virtualbox/configuration
+    v.gui = true
+    v.name = "Archlinux_GUI"
+    v.linked_clone = true
+    v.check_guest_additions = true
+    # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    v.customize ["modifyvm", :id, "--vram", "64"] #video ram in MB
+    v.memory = 2048
+    v.cpus = 2
+    # Enable bidirectional clipboard sharing
+    v.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+    # Enable bidirectional drag and drop
+    v.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
+ 
+  end
+  config.vm.provision "shell", inline: $script
+
+end
