@@ -16,7 +16,7 @@ For Fedora specific instructions, see [vagrant-fedora-template](https://github.c
 Start the virtual machine using "vagrant up" with predefined provisioners.
 
 ```sh
-vagrant up --provider virtualbox --provision-with main,angular,terraform,kubectl,k9s,minikube,postman,code,helm,aws,ansible,final
+vagrant up --provider virtualbox --provision-with main,ansible,final
 ```
 
 - Choose a provider and change the tools you want to install

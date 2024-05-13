@@ -1,6 +1,8 @@
 # ArchLinux Desktop
 
-Provides a vagrant template to run an ArchLinux desktop environment using GNOME and/or KDE.
+Provides a vagrant template to run an ArchLinux virtual machine with provisioners. Provisioners can add GNOME, KDE desktop environments.
+
+For a simple `Vagrantfile` to run an ArchLinux desktop environment with KDE, see the `kde` folder.
 
 ## Prerequisites
 
@@ -9,7 +11,7 @@ Provides a vagrant template to run an ArchLinux desktop environment using GNOME 
 
 ## Get Started
 
-Start the virtual machine using "vagrant up" with selected provisioners.
+Start the virtual machine using `vagrant up` with selected provisioners.
 
 This example starts the virtual machine with GNOME desktop environment and sound support.
 
@@ -26,6 +28,8 @@ The provisioners are comma separated. See `Makefile` for examples to run.
 - `gnome`: Installs GNOME desktop environment
 - `kde`: Installs KDE desktop environment
 - `sound`: Installs and fixes sound issues in the virtual machine
+- `nix`: Install Nix package manager
+- `nix-home-manager`: Install Nix Home Manager
 
 ## Clean Up
 

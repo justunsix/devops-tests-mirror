@@ -1,0 +1,88 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile based on https://bbs.archlinux.org/viewtopic.php?id=260017 created by gwpl
+# with additions from https://github.com/balingit/vagrant-archlinux-gui
+#
+# Changes made:
+# - Use KDE Plasma desktop environment option
+# - Added Virtualbox clipboard and drag, drop sharing
+# - Additional comments on script steps
+# - Set localisation per https://wiki.archlinux.org/title/locale
+# - Add sound configuration
+
+$script = <<-'SCRIPT'
+
+# Localisation configuration for Toronto, Canada
+ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
+mv /etc/locale.gen /etc/locale.gen.old
+echo -e "en_CA.UTF-8 UTF-8\nen_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "LANG=en_CA.UTF-8" > /etc/locale.conf
+locale-gen
+
+# Update system
+pacman --noconfirm -Syyu
+# pacman --noconfirm -S vim htop git hwinfo
+# Before installing virtualbox packages, you need to remove -nox one
+pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,iso}
+# Install X.Org server, graphical packages
+pacman --noconfirm -S \
+                      xorg-server{,-common,-xwayland} \
+                      xorg-xinit \
+                      xf86-video-{fbdev,vesa} \
+                      xorg-xcalc xterm xorg-xrandr
+
+# Track VM creation time
+date > /etc/vagrant_provisioned_at
+# Add vagrant user to video group
+gpasswd -a vagrant video
+
+# Install desktop environment / display manager
+# Option - fluxbox
+# pacman --noconfirm -S fluxbox awesome && echo startfluxbox > /home/vagrant/.xinitrc
+# Option - If someone likes kde: 
+pacman --noconfirm -S plasma-desktop konsole dolphin kscreen && echo startplasma-x11 > /home/vagrant/.xinitrc
+chown vagrant:vagrant /home/vagrant/.xinitrc 
+# it looks like at this stage there is no /home/vagrant, so making .xinitrc may be required to be done manually
+
+# Set up Simple Desktop Display Manager (SDDM) login screen for X11 and Wayland
+pacman --noconfirm -S sddm
+systemctl enable sddm
+systemctl start sddm
+
+# Optional - Sound configuration
+pacman -S --noconfirm alsa-utils 
+# unmute sound and set volume to 100%
+# amixer sset Master 100%+ unmute
+alsactl store
+# PulseAudio seems to remove crackling sound, YMMV
+# pacman -S --noconfirm pulseaudio pulseaudio-alsa
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux/archlinux"
+  config.vm.provider "virtualbox" do |vb|
+    # https://www.vagrantup.com/docs/providers/virtualbox/configuration
+    vb.gui = true
+    vb.name = "Archlinux_GUI"
+    vb.linked_clone = true
+    vb.check_guest_additions = true
+    # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    # Video ram in MB, increase to 128 and increase memory to 4096 for more graphical applications like browser
+    vb.customize ["modifyvm", :id, "--vram", "64"] 
+    vb.memory = 2048
+    vb.cpus = 2
+    # Enable bidirectional clipboard sharing
+    vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+    # Enable bidirectional drag and drop
+    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
+    # Enable audio 
+    # - dsound for Windows DirectSound, alsa for Linux, or coreaudio for macOS
+    vb.customize ["modifyvm", :id, "--audio", "dsound"]
+    vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
+    
+  end
+  config.vm.provision "shell", inline: $script
+
+end

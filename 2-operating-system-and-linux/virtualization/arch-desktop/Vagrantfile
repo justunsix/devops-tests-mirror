@@ -1,69 +1,42 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile based on https://bbs.archlinux.org/viewtopic.php?id=260017 created by gwpl
+# Vagrantfile provisioners based on https://bbs.archlinux.org/viewtopic.php?id=260017 created by gwpl
 # with additions from https://github.com/balingit/vagrant-archlinux-gui
 #
 # Changes made:
-# - Use KDE Plasma desktop environment option
 # - Added Virtualbox clipboard and drag, drop sharing
 # - Additional comments on script steps
 # - Set localisation per https://wiki.archlinux.org/title/locale
 # - Add sound configuration
 
-$script = <<-'SCRIPT'
-
-# Localisation configuration for Toronto, Canada
-ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
-mv /etc/locale.gen /etc/locale.gen.old
-echo -e "en_CA.UTF-8 UTF-8\nen_US.UTF-8 UTF-8" > /etc/locale.gen
-echo "LANG=en_CA.UTF-8" > /etc/locale.conf
-locale-gen
-
-# Track VM creation time
-date > /etc/vagrant_provisioned_at
-
-# Update system
-pacman --noconfirm -Syyu
-# pacman --noconfirm -S vim htop git hwinfo
-# Before installing virtualbox packages, you need to remove -nox one
-pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,iso}
-
-# Install X.Org server, graphical packages
-pacman --noconfirm -S \
-                      xorg-server{,-common,-xwayland} \
-                      xorg-xinit \
-                      xf86-video-{fbdev,vesa} \
-                      xorg-xcalc xterm xorg-xrandr
-
-# Add vagrant user to video group
-gpasswd -a vagrant video
-
-# Install desktop environment / display manager
-# Option - fluxbox
-# pacman --noconfirm -S fluxbox awesome && echo startfluxbox > /home/vagrant/.xinitrc
-# Option - If someone likes kde: 
-pacman --noconfirm -S plasma-desktop konsole dolphin kscreen && echo startplasma-x11 > /home/vagrant/.xinitrc
-chown vagrant:vagrant /home/vagrant/.xinitrc 
-# it looks like at this stage there is no /home/vagrant, so making .xinitrc may be required to be done manually
-
-# Set up Simple Desktop Display Manager (SDDM) login screen for X11 and Wayland
-pacman --noconfirm -S sddm
-systemctl enable sddm
-systemctl start sddm
-
-# Optional - Sound configuration
-pacman -S --noconfirm alsa-utils 
-## unmute sound and set volume to 100%
-## amixer sset Master 100%+ unmute
-alsactl store
-## PulseAudio seems to remove crackling sound, YMMV
-## pacman -S --noconfirm pulseaudio pulseaudio-alsa
-
-SCRIPT
-
 Vagrant.configure("2") do |config|
+
   config.vm.box = "archlinux/archlinux"
+
+  ############################################################
+  # Copy some host files to configure VM like the host
+  ############################################################
+
+  # Starsip config for prompt
+  if File.exists?(File.expand_path("#{ENV['HOME']}/.config/starship.toml"))
+    config.vm.provision "file", source: "#{ENV['HOME']}/.config/starship.toml", destination: ".config/starship.toml"
+  end
+
+  # nushell config from a dotfiles repo for shell
+  if File.exists?(File.expand_path("#{ENV['HOME']}/Code/dotfiles/.config/nushell"))
+    config.vm.provision "file", source: "#{ENV['HOME']}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
+  end
+
+  # fish config for shell
+  if File.exists?(File.expand_path("#{ENV['HOME']}/.config/fish/config.fish"))
+    config.vm.provision "file", source: "#{ENV['HOME']}/.config/fish/config.fish", destination: ".config/fish/config.fish"
+  end
+
+  ############################################################
+  # VirtualBox Hypervisor Configuration
+  ############################################################
+
   config.vm.provider "virtualbox" do |vb|
     # https://www.vagrantup.com/docs/providers/virtualbox/configuration
     vb.gui = true
@@ -86,7 +59,9 @@ Vagrant.configure("2") do |config|
     
   end
 
-  # config.vm.provision "shell", inline: $script
+  ############################################################
+  # Provisioners
+  ############################################################
 
   config.vm.provision "main-setup", type: "shell", run: "never", path: "provisioner/main-setup.sh"
 
@@ -98,5 +73,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "sound", type: "shell", run: "never", path: "provisioner/sound.sh"
 
+  config.vm.provision "nix", type: "shell", run: "never", path: "provisioner/nix.sh"
+
+  config.vm.provision "nix-home-manager", type: "shell", run: "never", privileged: false, path: "provisioner/nix-home-manager.sh"
 
 end
