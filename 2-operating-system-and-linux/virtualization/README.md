@@ -10,7 +10,7 @@ Other Directories with `Vagrantfile`s for different types of VMs:
 - `ubuntu-nix-home-manager` directory, a similar virtual machine in the root directory `Vagrantfile` except uses [home-manager](https://github.com/nix-community/home-manager) and home.nix configuration file to set which programs to install instead of putting in Ansible playbook
 - `ubuntu-desktop` directory, `Vagrantfile` creating an Ubuntu VM with a GNOME desktop graphical user interface (GUI) environment
 - `windows-desktop` directory, `Vagrantfile` creating a Windows VM with a desktop graphical user interface (GUI) environment
-- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with KDE desktop environment
+- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with GNOME and/or KDE desktop environments
 
 VMs can be used as a base to install other software in the VM.
 

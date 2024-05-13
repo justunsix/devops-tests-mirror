@@ -27,13 +27,14 @@ date > /etc/vagrant_provisioned_at
 pacman --noconfirm -Syyu
 # pacman --noconfirm -S vim htop git hwinfo
 # Before installing virtualbox packages, you need to remove -nox one
-pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,dkms,iso}
+pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,iso}
+
 # Install X.Org server, graphical packages
 pacman --noconfirm -S \
                       xorg-server{,-common,-xwayland} \
                       xorg-xinit \
                       xf86-video-{fbdev,vesa} \
-                      xorg-xcalc xterm xrandr
+                      xorg-xcalc xterm xorg-xrandr
 
 # Add vagrant user to video group
 gpasswd -a vagrant video
@@ -84,6 +85,18 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
     
   end
-  config.vm.provision "shell", inline: $script
+
+  # config.vm.provision "shell", inline: $script
+
+  config.vm.provision "main-setup", type: "shell", run: "never", path: "provisioner/main-setup.sh"
+
+  config.vm.provision "xorg", type: "shell", run: "never", path: "provisioner/xorg.sh"
+
+  config.vm.provision "kde", type: "shell", run: "never", path: "provisioner/desktop-kde.sh"
+
+  config.vm.provision "gnome", type: "shell", run: "never", path: "provisioner/desktop-gnome.sh"
+
+  config.vm.provision "sound", type: "shell", run: "never", path: "provisioner/sound.sh"
+
 
 end
