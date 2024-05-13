@@ -20,6 +20,9 @@ echo -e "en_CA.UTF-8 UTF-8\nen_US.UTF-8 UTF-8" > /etc/locale.gen
 echo "LANG=en_CA.UTF-8" > /etc/locale.conf
 locale-gen
 
+# Track VM creation time
+date > /etc/vagrant_provisioned_at
+
 # Update system
 pacman --noconfirm -Syyu
 # pacman --noconfirm -S vim htop git hwinfo
@@ -32,8 +35,6 @@ pacman --noconfirm -S \
                       xf86-video-{fbdev,vesa} \
                       xorg-xcalc xterm xrandr
 
-# Track VM creation time
-date > /etc/vagrant_provisioned_at
 # Add vagrant user to video group
 gpasswd -a vagrant video
 
@@ -52,11 +53,11 @@ systemctl start sddm
 
 # Optional - Sound configuration
 pacman -S --noconfirm alsa-utils 
-# unmute sound and set volume to 100%
-# amixer sset Master 100%+ unmute
+## unmute sound and set volume to 100%
+## amixer sset Master 100%+ unmute
 alsactl store
-# PulseAudio seems to remove crackling sound, YMMV
-# pacman -S --noconfirm pulseaudio pulseaudio-alsa
+## PulseAudio seems to remove crackling sound, YMMV
+## pacman -S --noconfirm pulseaudio pulseaudio-alsa
 
 SCRIPT
 
