@@ -23,4 +23,6 @@ home-manager switch
 # Run broot --install in shell, run as user
 /home/vagrant/.nix-profile/bin/broot --install
 
+sudo chmod +x ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+
 echo -e "-- nix home-manager Installed and Setup"

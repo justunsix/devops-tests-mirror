@@ -19,18 +19,18 @@ Vagrant.configure("2") do |config|
   ############################################################
 
   # Starsip config for prompt
-  if File.exists?(File.expand_path("#{ENV['HOME']}/.config/starship.toml"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/.config/starship.toml", destination: ".config/starship.toml"
+  if File.exists?(File.expand_path("#{Dir.home}/.config/starship.toml"))
+    config.vm.provision "file", source: "#{Dir.home}/.config/starship.toml", destination: ".config/starship.toml"
   end
 
   # nushell config from a dotfiles repo for shell
-  if File.exists?(File.expand_path("#{ENV['HOME']}/Code/dotfiles/.config/nushell"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
+  if File.exists?(File.expand_path("#{Dir.home}/Code/dotfiles/.config/nushell"))
+    config.vm.provision "file", source: "#{Dir.home}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
   end
 
   # fish config for shell
-  if File.exists?(File.expand_path("#{ENV['HOME']}/.config/fish/config.fish"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/.config/fish/config.fish", destination: ".config/fish/config.fish"
+  if File.exists?(File.expand_path("#{Dir.home}/.config/fish/config.fish"))
+    config.vm.provision "file", source: "#{Dir.home}/.config/fish/config.fish", destination: ".config/fish/config.fish"
   end
 
   ############################################################
@@ -55,6 +55,7 @@ Vagrant.configure("2") do |config|
     # Enable audio 
     # - dsound for Windows DirectSound, alsa for Linux, or coreaudio for macOS
     vb.customize ["modifyvm", :id, "--audio", "dsound"]
+    #vb.customize ["modifyvm", :id, "--audio", "alsa"]
     vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
     
   end
@@ -77,4 +78,4 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "nix-home-manager", type: "shell", run: "never", privileged: false, path: "provisioner/nix-home-manager.sh"
 
-end
+end  
