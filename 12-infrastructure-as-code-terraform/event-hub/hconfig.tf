@@ -15,7 +15,7 @@ terraform {
 }
 
 # Configure the Microsoft Azure Provider
-# Using subscription 0042hscdev46wrk 
+# Using subscription ID from an environment variable 
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id

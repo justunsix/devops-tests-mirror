@@ -22,7 +22,6 @@ export TF_VAR_subscription_id="your_subscription_id"
 # Run make all && make test-eventhub-connection 
 # which will run the following commands
 # or continue with these commands:
-terraform apply
 
 # Initilize the terraform project
 terraform init
