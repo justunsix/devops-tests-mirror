@@ -15,6 +15,10 @@ variable "monitoring_resource_group_id" {
   description = "The ID of the resource group to import containing monitoring resources"
 }
 
+variable "monitoring_log_analytics_workspace_id" {
+  description = "The ID of the Log Analytics Workspace to import"
+}
+
 #############################################
 # Provider
 #############################################
@@ -42,4 +46,9 @@ provider "azurerm" {
 import {
   to = "monitoring_resource_group"
   id = var.monitoring_resource_group_id
+}
+
+import {
+  to = "log_analytics_workspace"
+  id = var.monitoring_log_analytics_workspace_id
 }

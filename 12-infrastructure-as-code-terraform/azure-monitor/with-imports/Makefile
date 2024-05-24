@@ -25,7 +25,7 @@ help: ## Show this help
 .ONESHELL:
 4-tf-plan-with-import-configuration: ## Plan Terraform deployment, get imported resources, and out imported resources configurations
 	## Usage https://developer.hashicorp.com/terraform/language/import/generating-configuration
-	## tf must not exist
+	## tf file must not exist
 	terraform plan -out=tfplan -generate-config-out=generated_resources.tf
 
 4.1-tf-plan: ## Plan Terraform deployment
@@ -43,6 +43,6 @@ help: ## Show this help
 6-tf-show: ## See state
 	terraform show	
 
-tf-all: 1-tf-init 2-az-login 3-tf-format-and-validate 4-tf-plan 5-tf-apply ## Initialize project, login to Azure, Set up Terraform and Apply Configuration
+tf-all: 1-tf-init 2-az-login 3-tf-format-and-validate 4-tf-plan 5-tf-apply ## Initialize project, login to Azure, Import resources, set up Terraform and Apply Configuration
 
 tf-apply-changes: 3-tf-format-and-validate 4-tf-plan 5-tf-apply ## Apply changes made to configuration to Terraform deployment
