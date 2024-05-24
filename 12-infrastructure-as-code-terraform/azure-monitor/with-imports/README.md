@@ -2,6 +2,8 @@
 
 Uses existing resource groups and monitor resources and then configures them to monitor Azure resources
 
+## Usage
+
 Prior to Terraform commands, set variables for Terraform to read
 
 ```sh
