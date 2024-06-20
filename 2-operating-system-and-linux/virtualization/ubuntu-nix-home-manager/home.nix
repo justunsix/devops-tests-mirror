@@ -23,12 +23,12 @@
     # pkgs.hello
     # Shell
     fish
-    zoxide
     nushell
-    starship
-    carapace
     atuin
     broot
+    starship
+    carapace
+    zoxide
     ## DevOps
     kubectl
 
@@ -82,4 +82,55 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  ##########################
+  # Programs Configuration #
+  ##########################
+
+  # Let home-manager manage shells
+  programs.bash = {
+    enable = true;
+  };
+
+  # Let home-manager manage shellsV
+  programs.nushell = {
+    enable = true;
+    shellAliases = {
+      lg = "lazygit";
+    };
+  };
+
+  # Atuin
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    enableNushellIntegration = true;
+  };
+  
+  # Broot
+  programs.broot = {
+    enable = true;
+    enableBashIntegration = true;
+    enableNushellIntegration = true;
+  };
+
+  # Carapace
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  # Starship
+  programs.starship = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  # Zoxide
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+    enableNushellIntegration = true;
+  };
+
 }

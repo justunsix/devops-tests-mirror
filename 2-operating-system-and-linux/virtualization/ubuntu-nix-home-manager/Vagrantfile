@@ -20,9 +20,10 @@ Vagrant.configure("2") do |config|
   end
 
   # nushell config from a dotfiles repo for shell
-  if File.exists?(File.expand_path("#{ENV['HOME']}/Code/dotfiles/.config/nushell"))
-    config.vm.provision "file", source: "#{ENV['HOME']}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
-  end
+  # Replaced with home-manager configurations
+  # if File.exists?(File.expand_path("#{ENV['HOME']}/Code/dotfiles/.config/nushell"))
+  #   config.vm.provision "file", source: "#{ENV['HOME']}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
+  # end
 
   # fish config for shell
   if File.exists?(File.expand_path("#{ENV['HOME']}/.config/fish/config.fish"))
@@ -56,8 +57,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: false, path: "install_home_manager.sh"
 
   # Run broot --install in shell, run as user
-  config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    /home/vagrant/.nix-profile/bin/broot --install
-  SHELL
+  # Replaced with home-manager configurations
+  # config.vm.provision "shell", privileged: false, inline: <<-SHELL
+  #   /home/vagrant/.nix-profile/bin/broot --install
+  # SHELL
 
 end

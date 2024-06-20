@@ -12,8 +12,9 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
+# Replaced as home-manager now manages the shell as well
 # Add . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" to bashrc \
-echo '$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh' >> /home/vagrant/.bashrc
+# echo '$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh' >> /home/vagrant/.bashrc
 
 # Install programs in home.nix
-home-manager switch
+home-manager switch -b backup
