@@ -22,7 +22,6 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     # Shell
-    fish
     nushell
     atuin
     broot
@@ -91,8 +90,6 @@
   programs.bash = {
     enable = true;
   };
-
-  # Let home-manager manage shellsV
   programs.nushell = {
     enable = true;
     shellAliases = {
