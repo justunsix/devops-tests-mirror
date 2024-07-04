@@ -22,7 +22,8 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     
-    # Shell
+    # Base
+    ## Shell
     zoxide
     nushell
     starship
@@ -30,7 +31,7 @@
     atuin
     broot
 
-    # DevOps
+    ## DevOps
     helix
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
