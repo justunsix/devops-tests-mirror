@@ -48,39 +48,46 @@
     # '')
   ];
 
-  # From https://nix-community.github.io/home-manager/options.xhtml#opt-programs.broot.enable
-  programs.broot = {
+  ##########################
+  # Programs Configuration #
+  ##########################
+  # See https://nix-community.github.io/home-manager/options.xhtml
+
+  # Let home-manager manage shells
+  programs.bash = {
+    enable = true;
+  };
+  programs.nushell = {
+    enable = true;
+  };
+
+  programs.atuin = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
-  programs.starship = {
+  programs.broot = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   programs.carapace = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
-  programs.atuin = {
+  programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
