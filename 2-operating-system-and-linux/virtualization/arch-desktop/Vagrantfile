@@ -15,25 +15,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
 
   ############################################################
-  # Copy some host files to configure VM like the host
-  ############################################################
-
-  # Starsip config for prompt
-  if File.exists?(File.expand_path("#{Dir.home}/.config/starship.toml"))
-    config.vm.provision "file", source: "#{Dir.home}/.config/starship.toml", destination: ".config/starship.toml"
-  end
-
-  # nushell config from a dotfiles repo for shell
-  if File.exists?(File.expand_path("#{Dir.home}/Code/dotfiles/.config/nushell"))
-    config.vm.provision "file", source: "#{Dir.home}/Code/dotfiles/.config/nushell", destination: ".config/nushell"
-  end
-
-  # fish config for shell
-  if File.exists?(File.expand_path("#{Dir.home}/.config/fish/config.fish"))
-    config.vm.provision "file", source: "#{Dir.home}/.config/fish/config.fish", destination: ".config/fish/config.fish"
-  end
-
-  ############################################################
   # VirtualBox Hypervisor Configuration
   ############################################################
 
