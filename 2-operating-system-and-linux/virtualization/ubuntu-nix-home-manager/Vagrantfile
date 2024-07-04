@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # Copy some host files to configure VM like the host
   ############################################################
 
-  # Starsip config for prompt
+  # Starship config for prompt
   if File.exists?(File.expand_path("#{ENV['HOME']}/.config/starship.toml"))
     config.vm.provision "file", source: "#{ENV['HOME']}/.config/starship.toml", destination: ".config/starship.toml"
   end

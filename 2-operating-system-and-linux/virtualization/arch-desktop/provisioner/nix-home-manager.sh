@@ -6,23 +6,17 @@ set -e
 
 # Create a folder $HOME/.config/home-manager
 mkdir -p /home/vagrant/.config/home-manager
-# Symlink /vagrant/home.nix to $HOME/.config/home-manager/home.nix
-ln -s /vagrant/home.nix /home/vagrant/.config/home-manager/home.nix
 
 # Install home-manager
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-# Add . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" to bashrc \
-echo '$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh' >> /home/vagrant/.bashrc
+# Remove default and replace with custom home.nix
+rm /home/vagrant/.config/home-manager/home.nix
 
-# Install programs in home.nix
-home-manager switch
+# Symlink /vagrant/home.nix to $HOME/.config/home-manager/home.nix
+ln -s /vagrant/home.nix /home/vagrant/.config/home-manager/home.nix
 
-# Run broot --install in shell, run as user
-/home/vagrant/.nix-profile/bin/broot --install
-
-sudo chmod +x ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-
-echo -e "-- nix home-manager Installed and Setup"
+# Install programs in home.nix and backup any existing files
+home-manager switch -b backup

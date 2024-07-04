@@ -2,15 +2,15 @@
 
 This root directory contains `Vagrantfile`s for different virtual machines.
 
-- `Vagrantfile` in root directory - creates an Ubuntu virtual machine (VM) with some Nix packages installed.
+- `Vagrantfile` in root directory - creates an Ubuntu virtual machine (VM) with Ansible and some Nix packages installed.
 
 Other Directories with `Vagrantfile`s for different types of VMs:
 
+- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with GNOME and/or KDE desktop environments
 - `nixos` directory, `Vagrantfile` creating a NixOS VM
 - `ubuntu-nix-home-manager` directory, a similar virtual machine in the root directory `Vagrantfile` except uses [home-manager](https://github.com/nix-community/home-manager) and home.nix configuration file to set which programs to install instead of putting in Ansible playbook
 - `ubuntu-desktop` directory, `Vagrantfile` creating an Ubuntu VM with a GNOME desktop graphical user interface (GUI) environment
 - `windows-desktop` directory, `Vagrantfile` creating a Windows VM with a desktop graphical user interface (GUI) environment
-- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with GNOME and/or KDE desktop environments
 
 VMs can be used as a base to install other software in the VM.
 
@@ -50,5 +50,6 @@ To use this project, follow these steps:
   - [gusztavvargadr / packer Wiki](https://github.com/gusztavvargadr/packer/wiki) for ready to use images
 - Ubuntu Desktops:
   - [Aufbau-einer-Smarthome-Security-Umgebung](https://github.com/Simon-Str/Aufbau-einer-Smarthome-Security-Umgebung) - VM configured with Ubuntu, GUI interface, and Ansible playbook.
-  - [ubuntu-config-scripts](https://github.com/yaphott/ubuntu-config-scripts)
+  - [ubuntu-config-scripts](https://github.com/yaphott/ubuntu-config-scripts) - Development environment configuration scripts for Ubuntu Desktop (22.04)
   - [vagrant-ubuntu-desktop](https://github.com/Emna-Cheniour/vagrant-ubuntu-desktop/tree/main) - VM configured with Ubuntu, GUI interface, and other customizations for development purposes
+- Fedora `Vagrantfile` and Provisioner scripts set up: [vagrant-fedora](https://github.com/baroxx/vagrant-fedora)
