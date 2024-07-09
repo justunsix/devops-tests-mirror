@@ -1,6 +1,6 @@
 # ArchLinux Desktop
 
-Provides a vagrant template to run an ArchLinux virtual machine with provisioners. Provisioners can add GNOME, KDE desktop environments.
+Provides a vagrant template to run an ArchLinux virtual machine with provisioners. Provisioners can add GNOME, KDE desktop or command line only environments.
 
 For a simple `Vagrantfile` to run an ArchLinux desktop environment with KDE, see the `kde` folder.
 
@@ -16,7 +16,11 @@ Start the virtual machine using `vagrant up` with selected provisioners.
 This example starts the virtual machine with GNOME desktop environment and sound support.
 
 ```sh
-vagrant up --provider virtualbox --provision-with main-setup,xorg,gnome,sound
+# desktopvm - name of the virtual machine defined in Vagrantfile
+# --provider virtualbox - use VirtualBox as the provider
+# --provision-with - run the selected provisioners in the order specified
+#                    which are shell scripts to configure the system and install packages
+vagrant up desktopvm --provider virtualbox --provision-with main-setup,virtualbox-integration,xorg,gnome,sound
 ```
 
 ## Provisioners
