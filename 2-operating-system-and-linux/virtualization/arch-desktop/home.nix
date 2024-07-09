@@ -31,8 +31,19 @@
     atuin
     broot
 
+    # File Management
+    git
+
     ## DevOps
     helix
+    neovim
+    ### Astronvim dependencies and utilities
+    gcc
+    tree-sitter
+    ripgrep
+    lazygit    
+    #### nodejs LTS as of 2024-07-08
+    nodejs_20
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -83,6 +94,13 @@
     enable = true;
     enableBashIntegration = true;
     enableNushellIntegration = true;
+    settings = {
+      # format = "$all";
+      shell = {
+        format = "[$indicator ](bold cyan) ";
+        disabled = false;
+      };
+    };    
   };
 
   programs.zoxide = {
