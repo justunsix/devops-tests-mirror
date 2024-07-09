@@ -16,9 +16,4 @@ pacman --noconfirm -Syyu
 
 # pacman --noconfirm -S vim htop git hwinfo
 
-# Before installing virtualbox packages, you need to remove -nox one
-pacman --noconfirm -R virtualbox-guest-utils-nox && pacman --noconfirm -S virtualbox-guest-{utils,iso}
-# dkms removed 2024-05-13, was previously
-# pacman --noconfirm -S virtualbox-guest-{utils,dkms,iso}
-
-echo -e "-- OS Localization, VirtualBox Integration and OS Update Complete"
+echo -e "-- OS Localization and OS Update Complete"
