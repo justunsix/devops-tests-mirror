@@ -30,20 +30,47 @@
     carapace
     atuin
     broot
+    helix
+
+    # -------------------
+    # Additional Programs
+
+    # System/Package Management
+    topgrade
+
+    # Shell Utilities
+    mprocs
+    zellij
+    bat
+    ## Search
+    fzf
+    fd
 
     # File Management
     git
+    vcstool
+
+    # Productivity
+    plantuml
+    pandoc
 
     ## DevOps
-    helix
     neovim
+    gnumake
     ### Astronvim dependencies and utilities
     gcc
     tree-sitter
     ripgrep
     lazygit    
-    #### nodejs LTS as of 2024-07-08
+    #### nodejs LTS for LSP servers as of 2024-07-08
     nodejs_20
+    
+    ### Emacs
+    emacs
+    #### Doom Emacs dependencies
+    ##### ripgrep, git, fd installed above
+    ##### Shellcheck used by Emacs Flymake for shell scripts by default - Emacs 29.1
+    shellcheck
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -67,6 +94,7 @@
   # Let home-manager manage shells
   programs.bash = {
     enable = true;
+    initExtra = "nu";
   };
   programs.nushell = {
     enable = true;
@@ -90,6 +118,33 @@
     enableNushellIntegration = true;
   };
 
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    defaultCommand = "fd --hidden --type f";
+  };
+
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "dracula_at_night";
+      editor = {
+        line-number = "relative";
+      };
+      editor.cursor-shape = {
+        insert = "bar";
+        normal = "block";
+        select = "underline";
+      };
+      editor.soft-wrap = {
+        enable = true;
+      };
+      editor.file-picker = {
+        hidden = false;
+      };
+    };
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
@@ -101,6 +156,11 @@
         disabled = false;
       };
     };    
+  };
+
+  programs.zellij = {
+    enable = true;
+    enableBashIntegration = true;
   };
 
   programs.zoxide = {
@@ -140,7 +200,7 @@
   #  /etc/profiles/per-user/vagrant/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "hx";
   };
 
   # Let Home Manager install and manage itself.
