@@ -23,6 +23,8 @@ This example starts the virtual machine with GNOME desktop environment and sound
 vagrant up desktopvm --provider virtualbox --provision-with main-setup,virtualbox-integration,xorg,gnome,sound
 ```
 
+See the [Makefile](Makefile) for more examples running the different virtual machines with different provisioners.
+
 ## Provisioners
 
 The provisioners are comma separated. See `Makefile` for examples to run.
