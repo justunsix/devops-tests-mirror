@@ -75,6 +75,20 @@ Vagrant.configure("2") do |config|
   end
 
   ############################################################
+  # Mount repositories from the host
+  ############################################################
+
+  # If exists, mount ~/Code from Windows Host to $HOME/Code/m
+  if File.directory?(File.expand_path("#{ENV['HOME']}/Code"))
+    config.vm.synced_folder "#{ENV['HOME']}/Code", "/home/vagrant/Code/m"
+  end
+
+  # If exists, mount S:/Code from Windows Host to $HOME/Code/s
+  if File.directory?(File.expand_path("S:/Code"))
+    config.vm.synced_folder "S:/Code", "/home/vagrant/Code/s"
+  end
+
+  ############################################################
   # Provisioners
   ############################################################
 
