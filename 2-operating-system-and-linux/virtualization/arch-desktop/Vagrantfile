@@ -94,4 +94,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "astronvim", type: "shell", run: "never", privileged: false, path: "provisioner/astronvim.sh"
 
+  config.vm.provision "emacs-doom", type: "shell", run: "never", privileged: false, path: "provisioner/emacs-doom.sh"
+
 end  
