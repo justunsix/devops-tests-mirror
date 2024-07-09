@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Check if nix already installed, if so skip 
-if command -v nix > /dev/null; then
+# Check if nix already installed, if not, do install
+if ! command -v nix &> /dev/null; then
 
     # Install nix
     pacman --noconfirm -S curl

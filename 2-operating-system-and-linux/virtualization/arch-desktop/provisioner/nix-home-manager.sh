@@ -2,7 +2,7 @@
 set -e
 
 # Check if home-manager already installed, if so skip 
-if command -v home-manager > /dev/null; then
+if ! command -v home-manager > /dev/null; then
 
     # Install nix home-manager per
     # https://nix-community.github.io/home-manager/index.xhtml
