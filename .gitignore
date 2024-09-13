@@ -284,6 +284,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.ps1
 .venv
 env/
 venv/
@@ -368,6 +369,9 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Terraform plan files
+tfplan
+
 ### Gradle ###
 .gradle
 **/build/
@@ -396,6 +400,3 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/python,terraform,gradle,maven,ansible,emacs,pycharm+all
 
 # Other
-
-# Terraform plan files
-tfplan
