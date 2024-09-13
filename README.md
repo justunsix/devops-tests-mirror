@@ -2,6 +2,8 @@
 
 Development and Operations test and projects.
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/justunsix/devops-tests)
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
