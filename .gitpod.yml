@@ -21,5 +21,9 @@ ports:
     description: Port 3080 for the react-nodejs-example
     port: 3080
     onOpen: open-preview
+  - name: Nexus
+    description: Port 8081 for Nexus repository manager
+    port: 8081
+    onOpen: open-preview
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
