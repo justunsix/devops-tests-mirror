@@ -14,6 +14,15 @@ tasks:
     init: |
       sdk install Java
       sdk install gradle
+  - name: Set up home-manager and shell programs
+    init: |
+      mkdir -p /home/gitpod/.config/home-manager
+      nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+      nix-channel --update
+      nix-shell '<home-manager>' -A install
+      rm /home/gitpod/.config/home-manager/home.nix
+      ln -s /workspace/devops-tests/2-operating-system-and-linux/virtualization/gitpod/home.nix /home/gitpod/.config/home-manager/home.nix
+      home-manager switch -b backup
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
