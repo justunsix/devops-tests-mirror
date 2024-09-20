@@ -5,6 +5,11 @@ additionalRepositories:
   - url: https://gitlab.com/twn-devops-bootcamp/latest/04-build-tools/java-maven-app
   # Java-app with gradle
   - url: https://gitlab.com/twn-devops-bootcamp/latest/04-build-tools/java-app
+  # Java-app with gradle latest updates
+  - url: https://gitlab.com/twn-devops-bootcamp/latest/06-nexus/java-app/
+    checkoutLocation: java-app-latest
+  - url: https://gitlab.com/twn-devops-bootcamp/latest/06-nexus/java-maven-app
+    checkoutLocation: java-maven-app-latest
   # React-nodejs-app
   - url: https://github.com/techworld-with-nana/react-nodejs-example
 
@@ -12,7 +17,7 @@ additionalRepositories:
 tasks:
   - name: Upgrade Java, Gradle
     init: |
-      sdk install Java
+      sdk install java
       sdk install gradle
   - name: Set up home-manager and shell programs
     init: |
@@ -23,16 +28,20 @@ tasks:
       rm /home/gitpod/.config/home-manager/home.nix
       ln -s /workspace/devops-tests/2-operating-system-and-linux/virtualization/gitpod/home.nix /home/gitpod/.config/home-manager/home.nix
       home-manager switch -b backup
+  - name: Set up Nexus interactively
+    command: |
+      cd /workspace/devops-tests/6-artifact-repository-manager/scripts
+      sudo sh provisioner-nexus.sh
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
+# Can also visit ports at https://8081-<URL of gitpod workspace>
 ports:
-  - name: Frontend
-    description: Port 3080 for the react-nodejs-example
-    port: 3080
-    onOpen: open-preview
   - name: Nexus
     description: Port 8081 for Nexus repository manager
     port: 8081
-    onOpen: open-preview
+    onOpen: open-browser
+    protocol: http
+
+workspaceLocation: devops-tests/.vscode/devops-tests.code-workspace
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
