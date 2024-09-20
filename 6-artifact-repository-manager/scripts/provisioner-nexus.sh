@@ -7,7 +7,7 @@ export NEXUS_VERSION_PLATFORM="${NEXUS_VERSION}-unix"
 run_nexus() {
     # Start Nexus as nexus user
     echo "Starting Nexus Artifact Repository"
-    su - nexus -c "/opt/$NEXUS_VERSION/bin/nexus start"
+    su - nexus -c "/opt/$NEXUS_VERSION/bin/nexus start &"
 }
 
 install_nexus() {
@@ -40,7 +40,7 @@ install_nexus() {
     # Set user in Nexus
     sed -i 's/#run_as_user=""/run_as_user="nexus"/g' /opt/$NEXUS_VERSION/bin/nexus.rc
 
-    run-nexus
+    run_nexus
 }
 
 if [ -d "/opt/$NEXUS_VERSION" ]; then
