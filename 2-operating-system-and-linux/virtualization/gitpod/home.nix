@@ -69,9 +69,9 @@
   ##########################
 
   # Let home-manager manage shells
-  programs.bash = {
+  programs.fish = {
     enable = true;
-  };
+  };  
   programs.nushell = {
     enable = true;
   };
@@ -79,33 +79,35 @@
   # Atuin
   programs.atuin = {
     enable = true;
-    enableBashIntegration = true;
+    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
   
   # Broot
   programs.broot = {
     enable = true;
-    enableBashIntegration = true;
+    enableFishIntegration = true;    
     enableNushellIntegration = true;
   };
 
   # Carapace
   programs.carapace = {
     enable = true;
+    enableFishIntegration = true;    
     enableNushellIntegration = true;
   };
 
   # Starship
   programs.starship = {
     enable = true;
+    enableFishIntegration = true;    
     enableNushellIntegration = true;
   };
 
   # Zoxide
   programs.zoxide = {
     enable = true;
-    enableBashIntegration = true;
+    enableFishIntegration = true;    
     enableNushellIntegration = true;
   };
 
