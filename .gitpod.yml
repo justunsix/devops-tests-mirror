@@ -7,7 +7,9 @@ additionalRepositories:
   - url: https://gitlab.com/twn-devops-bootcamp/latest/04-build-tools/java-app
   # Java-app with gradle latest updates
   - url: https://gitlab.com/twn-devops-bootcamp/latest/06-nexus/java-app/
-  - checkoutLocation: java-app-latest
+    checkoutLocation: java-app-latest
+  - url: https://gitlab.com/twn-devops-bootcamp/latest/06-nexus/java-maven-app
+    checkoutLocation: java-maven-app-latest
   # React-nodejs-app
   - url: https://github.com/techworld-with-nana/react-nodejs-example
 
@@ -35,14 +37,11 @@ tasks:
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 # Can also visit ports at https://8081-<URL of gitpod workspace>
 ports:
-  - name: Frontend
-    description: Port 3080 for the react-nodejs-example
-    port: 3080
-    onOpen: open-preview
   - name: Nexus
     description: Port 8081 for Nexus repository manager
     port: 8081
-    onOpen: open-preview
+    onOpen: open-browser
+    protocol: https
 
 workspaceLocation: devops-tests/.vscode/devops-tests.code-workspace
 
