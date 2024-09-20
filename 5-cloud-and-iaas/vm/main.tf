@@ -95,7 +95,12 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
-  size                  = "Standard_DS1_v2"
+  # D-Series
+  # 2 CPU, 7 GB RAM from:
+  # https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/dv2-series?tabs=sizebasic
+  size                  = "Standard_D2_v2"
+  # Minimal size
+  # size                  = "Standard_DS1_v2"
 
   os_disk {
     name                 = "myOsDisk"

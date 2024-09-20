@@ -27,6 +27,9 @@ help: ## Show this help
 5-tf-apply: ## Apply Terraform deployment and show
 	terraform apply tfplan
 
+5-tf-store-ssh-key: ## Store SSH key into personal store
+	terraform output key_data_private > ~/.ssh/azure_vm_key.rsa
+
 6-tf-state: ## See state file and resources
 	terraform state list
 
@@ -39,6 +42,6 @@ help: ## Show this help
 6-tf-see-outputs: ## See outputs of Terraform deployment
 	terraform output
 
-tf-all: 1-tf-init 2-az-login 3-tf-format-and-validate 4-tf-plan 5-tf-apply ## Initialize project, login to Azure, Set up Terraform and Apply Configuration
+tf-all: 1-tf-init 2-az-login 3-tf-format-and-validate 4-tf-plan 5-tf-apply 5-tf-store-ssh-key ## Initialize project, login to Azure, Set up Terraform and Apply Configuration and Store SSH key
 
 tf-apply-changes: 3-tf-format-and-validate 4-tf-plan 5-tf-apply ## Apply changes made to configuration to Terraform deployment
