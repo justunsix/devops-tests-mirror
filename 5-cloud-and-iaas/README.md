@@ -5,7 +5,7 @@ Project is used to set up a server to host an application and the DevOps infrast
 ## What is Set up
 
 - Set up Ubuntu Linux virtual machine (VM) in Microsoft Azure
-- Use infrastructure as code to set up the VM using Terraform, using [Azure Linux VM Terraform template](https://github.com/Azure/terraform/tree/master/quickstart/101-vm-with-infrastructure) with variables set in [`variables.tf`](vm\variables.tf)
+ - Set variables set in [`variables.tf`](vm\variables.tf) 
   - See Usage section below or [`Makefile`](vm/Makefile) on how to set up the VM
 - Configure VM shell scripts or Ansible
 
@@ -37,8 +37,15 @@ terraform output key_data_private > ~/.ssh/azure_vm_key.rsa
 terraform output key_data_private > C:\Users\myusername\.ssh\azure_vm_key.rsa
 
 # SSH into the VM
+## Username is azureuser specified in variables.tf
 ssh -i ~/.ssh/azure_vm_key.rsa azureuser@<public_ip_of_VM>
 
 # Since the VM is created using SSH key, running sudo with commands
 # should not prompt for the password
 ```
+
+## See Also
+
+- Folder uses instructions and code templates mainly from [Azure Linux VM Terraform template](https://github.com/Azure/terraform/tree/master/quickstart/101-vm-with-infrastructure) 
+- [Hasicorp Terraform's VM basic SSH example](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/virtual-machines/linux/basic-ssh)
+ 
