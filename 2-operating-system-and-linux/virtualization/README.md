@@ -6,7 +6,7 @@ This root directory contains `Vagrantfile`s for different virtual machines.
 
 Other Directories with `Vagrantfile`s for different types of VMs:
 
-- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with GNOME and/or KDE desktop environments
+- `arch-desktop` directory, `Vagrantfile` creating an Arch Linux VM with GNOME, KDE desktop, or CLI only environments
 - `nixos` directory, `Vagrantfile` creating a NixOS VM
 - `ubuntu-nix-home-manager` directory, a similar virtual machine in the root directory `Vagrantfile` except uses [home-manager](https://github.com/nix-community/home-manager) and home.nix configuration file to set which programs to install instead of putting in Ansible playbook
 - `ubuntu-desktop` directory, `Vagrantfile` creating an Ubuntu VM with a GNOME desktop graphical user interface (GUI) environment
