@@ -4,6 +4,9 @@ set -e
 # Check if home-manager already installed, if so skip 
 if ! command -v home-manager > /dev/null; then
 
+    # Add nixpkgs unstable channel
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+
     # Install nix home-manager per
     # https://nix-community.github.io/home-manager/index.xhtml
 
