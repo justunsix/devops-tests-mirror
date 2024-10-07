@@ -46,9 +46,6 @@
     gradle
     maven
 
-    ## Cloud
-    azure-cli
-
     # Editors
     neovim
     ## Required Neovim framework dependencies

@@ -80,6 +80,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "nix", type: "shell", run: "never", path: "provisioner/nix.sh"
 
+  config.vm.provision "azure-cli", type: "shell", run: "never", path: "provisioner/azure-cli.sh"
+
   config.vm.provision "nix-home-manager", type: "shell", run: "never", privileged: false, path: "provisioner/nix-home-manager.sh"
 
   config.vm.provision "lazyvim", type: "shell", run: "never", privileged: false, path: "provisioner/lazyvim.sh"
