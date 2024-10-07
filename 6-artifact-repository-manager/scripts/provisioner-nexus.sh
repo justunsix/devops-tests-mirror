@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Script to set up Ubuntu Server for Nexus Repository Manager
 # Run with sudo privileges
 
