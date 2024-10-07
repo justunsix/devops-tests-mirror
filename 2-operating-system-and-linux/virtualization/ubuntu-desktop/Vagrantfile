@@ -1,64 +1,87 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Credit to https://github.com/Simon-Str/Aufbau-einer-Smarthome-Security-Umgebung/blob/main/Vagrantfile
-
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
-username = "vagrant"
-
 Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.define "ubuntu_jammy_desktop"
-  config.vm.box = "ubuntu/jammy64"
+  config.vm.box = "archlinux/archlinux"
 
-  config.vm.provider "virtualbox" do |vb|
-    # Set VM name
-    vb.name = "Ubuntu Jammy Desktop"
-    # Allocate memory
-    vb.memory = "4096"
-    # Assign CPUs
-    vb.cpus = "2"
-    # Enable GUI
-    vb.gui = true
-    # Specify graphics controller
-    vb.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
-    # Set video RAM size
-    vb.customize ['modifyvm', :id, '--vram', '128']
-    # Enable bidirectional clipboard sharing
-    vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
-    # Enable bidirectional drag and drop
-    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
-    # Configure audio settings: Use DirectSound driver and AC'97 audio controller
-    #vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'ac97']
-    # Accelerate graphics
-    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
-    # vb.customize ["modifyvm", :id, "--accelerate2dvideo", "on"]
-    # Add DVD Drive for VirtualBox Guest additions later
-    vb.customize ['storageattach', :id, 
-						  '--storagectl', 'IDE', 
-						  '--port', '0', '--device', '1', 
-						  '--type', 'dvddrive', 
-						  '--medium', 'emptydrive']
-    
+  ############################################################
+  # VirtualBox Hypervisor Configuration
+  ############################################################
+
+  config.vm.define "clionly", primary: true do |clionly|
+    clionly.vm.box = "ubuntu/jammy64"
+
+    clionly.vm.provider :virtualbox do |vb|
+      vb.name = "ACLI"
+    end
   end
 
-  config.vm.provision "shell", inline: <<-SHELL
-    # Install desktop and virtualbox additions
-    sudo apt-get update
-    sudo apt-get install -y ubuntu-desktop build-essential dkms virtualbox-guest-utils virtualbox-guest-x11
-    # Permit anyone to start the GUI
-    sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
-  SHELL
-  
-  # Permit password authentication because broken vagrant publickey authentication
-  config.vm.provision "shell", inline: "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
+  # Source of desktop config: 
+  # https://github.com/Simon-Str/Aufbau-einer-Smarthome-Security-Umgebung/blob/main/Vagrantfile
+  config.vm.define "desktopvm" do |desktopvm|
+    desktopvm.vm.box = "ubuntu/jammy64"
 
-end
+    desktopvm.vm.provider :virtualbox do |vb|
+      # Set VM name
+      vb.name = "Ubuntu Jammy Desktop"
+      # Allocate memory
+      vb.memory = "4096"
+      # Assign CPUs
+      vb.cpus = "2"
+      # Enable GUI
+      vb.gui = true
+      # Specify graphics controller
+      vb.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+      # Set video RAM size
+      vb.customize ['modifyvm', :id, '--vram', '128']
+      # Enable bidirectional clipboard sharing
+      vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+      # Enable bidirectional drag and drop
+      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+      # Configure audio settings: Use DirectSound driver and AC'97 audio controller
+      #vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'ac97']
+      # Accelerate graphics
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+      # vb.customize ["modifyvm", :id, "--accelerate2dvideo", "on"]
+      # Add DVD Drive for VirtualBox Guest additions later
+      vb.customize ['storageattach', :id, 
+                '--storagectl', 'IDE', 
+                '--port', '0', '--device', '1', 
+                '--type', 'dvddrive', 
+                '--medium', 'emptydrive']
+
+      # Permit password authentication because broken vagrant publickey authentication
+      desktopvm.vm.provision "shell", inline: <<-SHELL, run: "always"
+        sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        sudo systemctl restart sshd
+      SHELL
+
+    end
+
+  end
+
+  ############################################################
+  # Mount repositories from the host
+  ############################################################
+
+  # If exists, mount ~/Code from Host to vagrant's $HOME/Code/
+  if File.directory?(File.expand_path("#{ENV['HOME']}/Code"))
+    config.vm.synced_folder "#{ENV['HOME']}/Code", "/home/vagrant/Code/"
+  end
+
+  ############################################################
+  # Provisioners
+  ############################################################
+
+  config.vm.provision "main-setup", type: "shell", run: "never", path: "provisioner/main-setup.sh"
+
+  config.vm.provision "gnome", type: "shell", run: "never", path: "provisioner/desktop-gnome.sh"
+
+  config.vm.provision "nix", type: "shell", run: "never", path: "provisioner/nix.sh"
+
+  config.vm.provision "nix-home-manager", type: "shell", run: "never", privileged: false, path: "provisioner/nix-home-manager.sh"
+
+  config.vm.provision "lazyvim", type: "shell", run: "never", privileged: false, path: "provisioner/lazyvim.sh"
+
+end  
