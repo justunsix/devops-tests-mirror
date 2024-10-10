@@ -88,4 +88,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "lazyvim", type: "shell", run: "never", privileged: false, path: "provisioner/lazyvim.sh"
 
+  config.vm.provision "docker"
+
 end  
