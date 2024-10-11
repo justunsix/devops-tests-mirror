@@ -7,6 +7,9 @@ help: ## Show this help
 run: ## Run the virtual machine as CLI only
 	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim,azure-cli,docker,aws-cli
 
+run-up-clionly: ## Turn on clionly VM
+	vagrant up clionly
+
 run-cli-minmal: ## Run the virtual machine as CLI only with minimal programs
 	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim
 
