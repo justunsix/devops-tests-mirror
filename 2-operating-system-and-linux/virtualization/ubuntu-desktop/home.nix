@@ -38,14 +38,6 @@
     # File Management
     git
 
-    # DevOps
-    gnumake
-    
-    ## Java
-    jdk21_headless
-    gradle
-    maven
-
     # Editors
     neovim
     ## Required Neovim framework dependencies
@@ -55,6 +47,15 @@
     ripgrep
     fd
     lazygit
+
+    # DevOps
+    gnumake
+    lazydocker
+    
+    ## Java
+    jdk21_headless
+    gradle
+    maven
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
