@@ -1,0 +1,122 @@
+def gv
+
+// Groovy script to check git changes
+CODE_CHANGES = getGitChanges()
+
+  pipeline {
+    agent any
+      parameters {
+        string(name: 'VERSION', defaultValue: '', description: 'version to deploy to prod')
+          choice(name: 'VERSION_TO', choices: ['1.1', '1.2', '1.3'], description: "Version to keep")
+          booleanParam(name: 'executeTests', defaultValue: true, description: 'where to run tests')
+      }
+    // Environment variables defined here
+    // can be used in pipeline
+    environment {
+      NEW_VERSION = getNewVersion()
+        // Use Jenkins credentials plugin
+        // and binding plugin for variables
+        SERVER_CREDENTIALS = credentials('credentials_id_in_jenkins')
+    }
+    // Build tools like mvn, gradle, jdk
+    // Requires pre-configured in Jenkins Tools
+    tools {
+      maven 'Maven'
+    }
+    stages {
+      stage("init") {
+        steps {
+          script {
+            gv = load "script.groovy"
+          }
+        }
+      }
+      stage("build jar") {
+        // Check for code changes example
+        when {
+          expression {
+            BRANCH_NAME == 'dev' && CODE_CHANGES == true
+          }
+        }
+        steps {
+          echo 'building application'
+            // reference variable
+            echo "building version $(NEW_VERSION)"
+        }
+        steps {
+          script {
+            gv.buildJar()
+
+          }
+        }
+      }
+
+      stage ("test") {
+        where {
+          expression { params.executeTests }
+        }
+        steps {
+          sh "Do tests"
+        }
+      }
+      stage ("test_branch") {
+        // Conditionals
+        when {
+          expression {
+            // Built in Jenkins variable
+            BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
+          }
+        }
+      }
+
+      stage("build image") {
+        steps {
+          script {
+            gv.buildImage()
+          }
+        }
+      }
+
+      stage("deploy") {
+        // User selects a choice
+        input {
+          message "Select the environment to deploy to"
+            ok "Environment selected"
+            parameters {
+              choice(name: 'ENV_TARGET', choices: ['dev', 'uat', 'prod'], description: "Target environment to deploy to")
+
+            }
+
+        }
+        steps {
+          // Use crendentials only in stage it is used
+          withCredentials([
+              usernamePassword(credentials: 'credentials_id_in_jenkins', usernameVariable: USER, passwordVariable: PWD)
+          ])
+            sh "some script ${USER} ${PWD}"
+            sh "deploying ${VERSION}"
+            // To assign variables to input, use in script section or file
+            script {
+              echo "Deploying to ${ENV_TARGET}"
+                env.ENV_T2 = input message: "Select 2nd environment to deploy to", ok "Done", parameters: [choice(name: 'ENV_TARGET', choices: ['dev', 'uat', 'prod'], description: "2nd target environment to deploy to")]
+                gv.deployApp()
+            }
+        }
+      }
+    }
+    // After stages, can define =post= for steps at end of job,
+    // can always be executed regardless of job status
+    post {
+      always {
+        //
+      }
+      success {
+        //
+      }
+      failure {
+        //
+      }
+
+
+    }
+

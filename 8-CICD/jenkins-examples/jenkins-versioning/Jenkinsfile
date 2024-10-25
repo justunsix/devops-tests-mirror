@@ -1,0 +1,85 @@
+def gv
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    stages {
+        stage('increment version') {
+            steps {
+                script {
+                  // Note the escape of the $
+                  // image tag will from come from app version
+                  // version is matched from the pom.xml
+                  // matcher will be an array of arrays
+                  // matcher[0] is match and matcher[0][1] will be version number
+                  // $BUILD_NUMBER is the Jenkins' build number
+                    echo 'incrementing app version...'
+                    sh 'mvn build-helper:parse-version versions:set \
+                        -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                        versions:commit'
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                }
+            }
+        }
+        // mvn package will use new version from above
+        // mvn clean will remove old JAR files, target folder
+        // and only latest version will remain
+        stage('build app') {
+            steps {
+                script {
+                    echo 'building the application...'
+                    sh 'mvn clean package'
+                }
+            }
+        }
+        stage('build image') {
+            steps {
+                script {
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                        sh "docker build -t nanatwn/demo-app:${IMAGE_NAME} ."
+                        sh 'echo $PASS | docker login -u $USER --password-stdin'
+                        sh "docker push nanatwn/demo-app:${IMAGE_NAME}"
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                script {
+                    echo 'deploying docker image...'
+                }
+            }
+        }
+        // Use GitLab credentials to use with git
+        // Configure git as Jenkins otherwise git will have errors
+        // which could also be set with the Jenkins server
+        // Print out git information
+        // Commit changes, must set HEAD of specific branch to push to origin
+        // as Jenkins checks out a commit hash
+        stage('commit version update'){
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                        sh 'git config --global user.email "jenkins@example.com"'
+                        sh 'git config --global user.name "jenkins"'
+
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+
+                        sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/twn-devops-bootcamp/latest/08-jenkins/java-maven-app.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:jenkins-jobs'
+                    }
+                }
+            }
+         }
+        }
+    }
+}
+

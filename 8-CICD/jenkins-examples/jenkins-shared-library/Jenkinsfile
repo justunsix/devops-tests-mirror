@@ -1,0 +1,70 @@
+#!/usr/bin/env groovy
+
+// Import library
+@Library('name-of-global-shared-library-in-jenkins')
+
+// Groovy script variable definition
+def gv
+
+pipeline {
+  agent any
+    tools {
+      maven 'Maven'
+    }
+  stages {
+    stage("init") {
+      steps {
+        script {
+          gv = load "script.groovy"
+        }
+      }
+    }
+    // Run tests on all branches
+    stage("test") {
+      steps {
+        script {
+          gv.testApp()
+
+        }
+      }
+
+    }
+    // Only build, deploy when in main branch
+    stage("build") {
+      when {
+        expression {
+          BRANCH_NAME == "main"
+        }
+      }
+      steps {
+        script {
+          // Call SL function
+          buildJar()
+        }
+      }
+    }
+
+    stage("build image") {
+      steps {
+        script {
+          // Call SL function
+          buildImage()
+        }
+      }
+    }
+
+    stage("deploy") {
+      when {
+        expression {
+          BRANCH_NAME == "main"
+        }
+      }
+      steps {
+        script {
+          gv.deployApp()
+        }
+      }
+    }
+  }
+}
+
