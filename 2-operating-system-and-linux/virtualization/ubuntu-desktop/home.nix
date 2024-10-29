@@ -120,12 +120,15 @@
     enable = true;
     initExtra = "nu";
   };
+  # kubectl will use k3s kubectl
+  # k9s will use k3s's kubeconfig
   programs.nushell =
     {
       enable = true;
       shellAliases = {
         lg = "lazygit";
         k = "kubectl";
+        k9s = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
       };
     };
 
