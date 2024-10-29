@@ -96,4 +96,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "docker"
 
+  config.vm.provision "k3s", type: "shell", run: "never", path: "provisioner/k3s.sh"
+
 end  

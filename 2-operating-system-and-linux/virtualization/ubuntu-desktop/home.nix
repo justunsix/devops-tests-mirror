@@ -50,12 +50,14 @@
 
     # DevOps
     gnumake
-    lazydocker
+    # lazydocker
+    ## k8s
+    k9s
     
     ## Java
-    jdk21_headless
-    gradle
-    maven
+    # jdk21_headless
+    # gradle
+    # maven
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -123,6 +125,7 @@
       enable = true;
       shellAliases = {
         lg = "lazygit";
+        k = "kubectl";
       };
     };
 
