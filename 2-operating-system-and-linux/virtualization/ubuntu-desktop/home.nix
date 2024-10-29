@@ -53,7 +53,7 @@
     # lazydocker
     ## k8s
     k9s
-    
+
     ## Java
     # jdk21_headless
     # gradle
@@ -105,6 +105,8 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    # Point kubeconfig to k3s
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
   # Let Home Manager install and manage itself.
@@ -122,15 +124,14 @@
   };
   # kubectl will use k3s kubectl
   # k9s will use k3s's kubeconfig
-  programs.nushell =
-    {
-      enable = true;
-      shellAliases = {
-        lg = "lazygit";
-        k = "kubectl";
-        k9s = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
-      };
+  programs.nushell = {
+    enable = true;
+    shellAliases = {
+      lg = "lazygit";
+      k = "kubectl";
+      k9s = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
     };
+  };
 
   programs.atuin = {
     enable = true;
@@ -160,20 +161,14 @@
     enable = true;
     settings = {
       theme = "dracula_at_night";
-      editor = {
-        line-number = "relative";
-      };
+      editor = { line-number = "relative"; };
       editor.cursor-shape = {
         insert = "bar";
         normal = "block";
         select = "underline";
       };
-      editor.soft-wrap = {
-        enable = true;
-      };
-      editor.file-picker = {
-        hidden = false;
-      };
+      editor.soft-wrap = { enable = true; };
+      editor.file-picker = { hidden = false; };
     };
   };
 
@@ -187,7 +182,15 @@
         format = "[$indicator ](bold cyan) ";
         disabled = false;
       };
+      # https://starship.rs/config/#kubernetes
+      kubernetes = {
+        disabled = false;
+        # Only show the module in directories that contain a k8s file
+        detect_files = [ "k8s" ];
+        #        symbol = "k8s ";
+      };
     };
+
   };
 
   programs.zellij = {
