@@ -1,0 +1,85 @@
+# Single host ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-fanout-example
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: myapp.com
+      http:
+        paths:
+          - path: /analytics
+            backend:
+              service:
+                name: analytics-service
+                port:
+                  number: 3000
+          - path: /shopping
+            backend:
+              service:
+                name: shopping-service
+                port:
+                  number: 8080
+
+---
+# Ingress with multiple sub-domains
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: virtual-host-ingress
+spec:
+  rules:
+    - host: analytics.myapp.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: analytics-service
+                port:
+                  number: 3000
+    - host: shopping.myapp.com
+      http:
+        - path: /
+          backend:
+            service:
+              name: shopping-service
+              port:
+                number: 8080
+
+---
+# Host with TLS certificate via Secret
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tls-example-ingress
+spec:
+  tls:
+    - hosts:
+        - myapp.com
+      secretName: myapp-secret-tls
+  rules:
+    http:
+      paths:
+        - path: /analytics
+          backend:
+            service:
+              name: analytics-service
+              port:
+                number: 3000
+---
+# Secret configuration with TLS certificate
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myapp-secret-tls
+  # Namespace must be in same namespace as ingress component
+  namespace: default
+type: Opaque
+data:
+  # Must be actual file contents
+  tls.crt: base64 encoded certificate
+  tls.key: base64 encoded key
+type: kubernetes.io/tls
