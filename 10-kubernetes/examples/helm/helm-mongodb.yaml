@@ -1,0 +1,7 @@
+architecture: replicaset
+replicaCount: 3
+persistence:
+  # Linode storage class will automatically managed storage and volumes creation
+  storageClass: "linode-block-storage"
+auth:
+  rootPassword: secret-root-pwd
