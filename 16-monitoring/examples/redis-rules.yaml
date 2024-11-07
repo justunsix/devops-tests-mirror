@@ -1,0 +1,32 @@
+# Prometheus Operator CRD
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: redis-rules
+  # Leave in default namespace where redis is running
+  labels:
+    app: kube-prometheus-stack
+    release: monitoring
+spec:
+  groups:
+    # Rules from https://samber.github.io/awesome-prometheus-alerts/rules#redis
+    - name: redis.rules
+      rules:
+        # Alert on redis outage immediately
+        - alert: RedisDown
+          expr: redis_up == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: Redis down (instance {{ $labels.instance }})
+            description: "Redis instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: RedisTooManyConnections
+          # If over 90% of max clients, trigger
+          expr: redis_connected_clients / redis_config_maxclients * 100 > 90
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Redis too many connections (instance {{ $labels.instance }})
+            description: "Redis has {{ $value }} connections\n  LABELS = {{ $labels }}"

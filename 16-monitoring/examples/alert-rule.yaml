@@ -1,0 +1,41 @@
+# Prometheus Operator CRD
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: main-rules
+  namespace: monitoring
+  labels:
+    app: kube-prometheus-stack
+    release: monitoring
+spec:
+  groups:
+    - name: main.rules
+    - rules:
+        # Name of alert for High CPU load
+        - alert: HostHighCpuLoad
+          # Metric: node_cpu_seconds_total with mode=idle filter
+          # Query function: rate over 2 mins and average the rates by node / instance
+          # Convert to percentage, 100 minus the value to get activate percentage time
+          # Check if average activity is greater than 50
+          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 50
+          # Condition must last for 2 minutes before firing
+          for: 2m
+          labels:
+            severity: warning
+            # Label for use later in alertmanager configuration
+            namespace: monitoring
+          annotations:
+            # Show value of CPU load
+            description: "CPU load on host is over 50%\n Value = {{ $value }}\n Instance = {{ $labels.instance }}\n"
+            summary: "Host CPU load high"
+            runbook_url: https://your.runbook.com/info
+        # Alert for pod crash, restart loop
+        - alert: KubernetesPodCrashLooping
+          expr: kube_pod_container_status_restarts_total > 5
+          for: 0m
+          labels:
+            severity: critical
+            namespace: monitoring
+          annotations:
+            description: "Pod { $labels.pod } is crash looping\n Value = {{ $value }}"
+            summary: "Kubernetes pod crash looping"

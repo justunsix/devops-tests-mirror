@@ -1,0 +1,39 @@
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: main-rules-alert-config
+  namespace: monitoring
+spec:
+  route:
+    # Apply to all routes
+    receiver: "email"
+    repeatInterval: 30m
+    # Child routes
+    routes:
+      # Match to existing rule names
+      - matchers:
+          - name: alertname
+            value: HostHighCpuLoad
+      - matchers:
+          - name: alertname
+            value: KubernetesPodCrashLooping
+        # Higher repeat interval for a more critical alert on pod crash
+        repeatInterval: 10m
+  receivers:
+    # See docs for different receiver types
+    - name: "email"
+      emailConfigs:
+        - to: "destination@domain.com"
+          from: "from.name@domain.com"
+          # SMTP
+          smarthost: "smtp.gmail.com:587"
+          authUsername: "myname@gmail.com"
+          authIdentity: "myname@gmail.com"
+          authPassword:
+            # Use K8s Secret instead of putting it here
+            name: gmail-auth
+            key: password
+          # Whether to send notification alert is clear
+          sendResolved: true
+          # Option Headers template
+          # headers:

@@ -1,0 +1,11 @@
+# Enable Targets to be monitored
+serviceMonitor:
+  enabled: true
+  # Labels allows Prometheus to identify target
+  labels:
+    release: monitoring
+
+# Address of redis Service name
+redisAddress: redis://redis-cart:6379
+# If redis is protected by account,
+# need to configure Secret
