@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp
+  labels:
+    app: nodeapp
+spec:
+  selector:
+    matchLabels:
+      app: nodeapp
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+    spec:
+      # Secret for image pull Docker Hub
+      imagePullSecrets:
+        - name: my-registry-key
+      containers:
+        - name: nodeapp
+          image: nanajanashia/demo-app:nodeapp
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp
+  labels:
+    app: nodeapp
+spec:
+  type: ClusterIP
+  selector:
+    app: nodeapp
+  ports:
+    # Name of port, for use in ServiceMonitor later
+    - name: service
+      protocol: TCP
+      # Based on Dockerfile
+      port: 3000
+      targetPort: 3000
+---
+# Prometheus CRD
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: monitoring-node-app
+  labels:
+    # Used by Prometheus to match all ServiceMonitor
+    release: monitoring
+    app: nodeapp
+spec:
+  # Define endpoints for scraping
+  endpoints:
+    - path: /metrics
+      # Name from deployment
+      port: service
+      targetPort: 3000
+  namespaceSelector:
+    # Match to namespace where app is running
+    # optional match any
+    # any: true
+    matchNames:
+      - default
+  selector:
+    # Find application with nodeapp label
+    matchLabels:
+      app: nodeapp
+
