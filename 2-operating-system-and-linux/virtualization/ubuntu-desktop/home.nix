@@ -53,6 +53,8 @@
     # lazydocker
     ## k8s
     k9s
+    kubectx
+    stern
 
     ## Java
     # jdk21_headless
