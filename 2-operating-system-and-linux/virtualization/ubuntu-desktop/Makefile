@@ -16,7 +16,7 @@ run-cli-all: ## Run the virtual machine as CLI only with all provisioners
 run-cli-devops: ## Run the virtual machine as CLI only with programs for devops testing
 	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,nix,nix-home-manager,lazyvim,k3s
 
-run-cli-editor: ## Run the virtual machine as CLI only with minimal programs
+run-cli-editor: ## Run the virtual machine as CLI only with minimal programs and advanced editor
 	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,nix,nix-home-manager,lazyvim
 
 run-cli-ansible-controller: ## Run the virtual machine as CLI only with ansible
