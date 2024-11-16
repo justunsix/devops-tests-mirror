@@ -1,6 +1,37 @@
 { config, pkgs, ... }:
 
-{
+let
+  pkgs = import <nixpkgs> { };
+  lib = pkgs.lib;
+
+  installEditor = builtins.getEnv "INSTALL_EDITOR" == "true";
+  installDevOps = builtins.getEnv "INSTALL_DEVOPS" == "true";
+  installAnsible = builtins.getEnv "INSTALL_ANSIBLE" == "true";
+
+  # Shells and convenience tools
+  baseConfig = import ./nix-modules/base.nix { inherit config pkgs; };
+
+  # Conditional packages and programs
+  editorConfig = if installEditor then
+    import ./nix-modules/editor.nix { inherit config pkgs; }
+  else {
+    packages = [ ];
+    programs = { };
+  };
+  devopsConfig = if installDevOps then
+    import ./nix-modules/devops.nix { inherit config pkgs; }
+  else {
+    packages = [ ];
+    programs = { };
+  };
+  ansibleConfig = if installAnsible then
+    import ./nix-modules/ansible.nix { inherit config pkgs; }
+  else {
+    packages = [ ];
+    programs = { };
+  };
+
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "vagrant";
@@ -15,65 +46,22 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; [
+  # The home.packages option allows you to install Nix packages into 
+  # your environment.
+  home.packages = baseConfig.packages ++ editorConfig.packages
+    ++ devopsConfig.packages ++ ansibleConfig.packages;
 
-    # Base
-    ## Shell
-    zoxide
-    nushell
-    starship
-    carapace
-    atuin
-    broot
-    helix
-
-    # System/Package Management
-    topgrade
-
-    # Shell Utilities
-    zellij
-
-    # File Management
-    git
-
-    # Editors
-    neovim
-    ## Required Neovim framework dependencies
-    gcc
-    xsel
-    ## Optional Neovim framework dependencies
-    ripgrep
-    fd
-    lazygit
-
-    # DevOps
-    gnumake
-    # lazydocker
-    ## k8s
-    k9s
-    kubectx
-    stern
-
-    ## Java
-    # jdk21_headless
-    # gradle
-    # maven
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  # Merge programs configurations
+  programs = lib.mkMerge [
+    baseConfig.programs
+    editorConfig.programs
+    devopsConfig.programs
+    ansibleConfig.programs
   ];
+
+  # Merge all programs configurations
+  #home.programs = basePackages.programs // editorConfig.programs
+  #  // devopsConfig.programs // ansibleConfig.programs;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -111,98 +99,9 @@
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   ##########################
   # Programs Configuration #
   ##########################
   # See https://nix-community.github.io/home-manager/options.xhtml
 
-  # Let home-manager manage shells
-  programs.bash = {
-    enable = true;
-    initExtra = "nu";
-  };
-  # kubectl will use k3s kubectl
-  # k9s will use k3s's kubeconfig
-  programs.nushell = {
-    enable = true;
-    shellAliases = {
-      lg = "lazygit";
-      k = "kubectl";
-      k9s = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
-    };
-  };
-
-  programs.atuin = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.broot = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.carapace = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableBashIntegration = true;
-    defaultCommand = "fd --hidden --type f";
-  };
-
-  programs.helix = {
-    enable = true;
-    settings = {
-      theme = "dracula_at_night";
-      editor = { line-number = "relative"; };
-      editor.cursor-shape = {
-        insert = "bar";
-        normal = "block";
-        select = "underline";
-      };
-      editor.soft-wrap = { enable = true; };
-      editor.file-picker = { hidden = false; };
-    };
-  };
-
-  programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-    settings = {
-      # format = "$all";
-      shell = {
-        format = "[$indicator ](bold cyan) ";
-        disabled = false;
-      };
-      # https://starship.rs/config/#kubernetes
-      kubernetes = {
-        disabled = false;
-        # Only show the module in directories that contain a k8s file
-        detect_files = [ "k8s" ];
-        #        symbol = "k8s ";
-      };
-    };
-
-  };
-
-  programs.zellij = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-  };
 }
