@@ -60,7 +60,8 @@
     helix = {
       enable = true;
       settings = {
-        theme = "dracula_at_night";
+        # In SSH, limited colour support, so use base16
+        theme = "base16_default";
         editor = { line-number = "relative"; };
         editor.cursor-shape = {
           insert = "bar";
