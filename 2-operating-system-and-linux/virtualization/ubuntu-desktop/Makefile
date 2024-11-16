@@ -19,6 +19,9 @@ run-cli-devops: ## Run the virtual machine as CLI only with programs for devops 
 run-cli-editor: ## Run the virtual machine as CLI only with minimal programs
 	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,nix,nix-home-manager,lazyvim
 
+run-cli-ansible-controller: ## Run the virtual machine as CLI only with ansible
+	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-ansible,nix,nix-home-manager
+
 run-cli-minimal: ## Run the virtual machine as CLI only with minimal programs
 	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager
 
