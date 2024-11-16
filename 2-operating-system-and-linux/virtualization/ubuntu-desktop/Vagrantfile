@@ -98,4 +98,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "k3s", type: "shell", run: "never", privileged: false, path: "provisioner/k3s.sh"
 
+  config.vm.provision "activate-devops", type: "shell", run: "never", path: "provisioner/activate-devops.sh"
+
+  config.vm.provision "activate-editor", type: "shell", run: "never", path: "provisioner/activate-editor.sh"
+
+  config.vm.provision "activate-ansible", type: "shell", run: "never", path: "provisioner/activate-ansible.sh"
 end  
