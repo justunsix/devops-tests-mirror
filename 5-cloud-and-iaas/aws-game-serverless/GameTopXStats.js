@@ -4,6 +4,8 @@
  * - Computing the required statistics
  * - Compute the gamer performance (score/shots).
  *
+ * Handler function is the entrypoint receiving event and environment information.
+ *
  * Function is used with a GameTopX DynamoDB table, which stores the data for the top 10 players of a game.
  *
  * The GameAPI is the API Gateway to trigger the lambda function, and to return the data to the users (humans or consumer applications).
@@ -158,8 +160,9 @@ const validateEvent = function (event) {
  */
 export const handler = async (event, context) => {
   let response = null;
-  // Let's show the received event
+  // Let's show the received event and context
   console.log(event);
+  console.log(context);
   // Let's validate the event, to extract the sessionId (if we have one)
   // eventValidation will have the form { "sessionId" : sessionIdValue, "isProxyIntegration" : [ true | false ] }
   // isProxyIntegration tells us about the API Gateway integration (if any) to this lambda function
