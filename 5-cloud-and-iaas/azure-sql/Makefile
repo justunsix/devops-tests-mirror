@@ -8,4 +8,9 @@ apply: az-login ## Apply the Bicep template to create the Azure SQL Server and D
 	az deployment sub create --location "Canada Central" --template-file main.bicep
 
 az-login: ## Login to Azure
-	az login	
+	az login
+
+destroy: ## Destroy the Azure SQL Server and Database using the resource group delete
+	# Prompt user for resource group name
+	@read -p "Enter the resource group name: " resourcegroupname; \
+	Remove-AzResourceGroup -Name $$resourcegroupname -Verbose
