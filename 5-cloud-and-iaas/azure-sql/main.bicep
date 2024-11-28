@@ -55,16 +55,13 @@ module sql 'br/public:avm/res/sql/server:0.10.1' = {
     administratorLoginPassword: password
     databases: [
       {
-        createMode: 'Secondary'
-        maxSizeBytes: 2147483648
-        name: '<name>'
+        name: 'smallestdb'
         sku: {
           name: 'Basic'
           tier: 'Basic'
         }
-        sourceDatabaseResourceId: '<sourceDatabaseResourceId>'
       }
-    ]    
+    ]
     // firewallRules: [
     //   {
     //     startIpAddress: '0.0.0.0'
