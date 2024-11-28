@@ -84,6 +84,12 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "main-setup", type: "shell", run: "never", path: "provisioner/main-setup.sh"
 
+  config.vm.provision "activate-ansible", type: "shell", run: "never", path: "provisioner/activate-ansible.sh"
+
+  config.vm.provision "activate-devops", type: "shell", run: "never", path: "provisioner/activate-devops.sh"
+
+  config.vm.provision "activate-editor", type: "shell", run: "never", path: "provisioner/activate-editor.sh"
+
   config.vm.provision "gnome", type: "shell", run: "never", path: "provisioner/desktop-gnome.sh"
 
   config.vm.provision "nix", type: "shell", run: "never", path: "provisioner/nix.sh"
@@ -98,9 +104,4 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "k3s", type: "shell", run: "never", privileged: false, path: "provisioner/k3s.sh"
 
-  config.vm.provision "activate-devops", type: "shell", run: "never", path: "provisioner/activate-devops.sh"
-
-  config.vm.provision "activate-editor", type: "shell", run: "never", path: "provisioner/activate-editor.sh"
-
-  config.vm.provision "activate-ansible", type: "shell", run: "never", path: "provisioner/activate-ansible.sh"
 end  
