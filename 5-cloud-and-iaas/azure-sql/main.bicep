@@ -56,10 +56,14 @@ module sql 'br/public:avm/res/sql/server:0.10.1' = {
     databases: [
       {
         name: 'smallestdb'
+        // 1 GB
+        maxSizeBytes: 1073741824
         sku: {
           name: 'Basic'
           tier: 'Basic'
+          capacity: 5
         }
+        zoneRedundant: false
       }
     ]
     // firewallRules: [
