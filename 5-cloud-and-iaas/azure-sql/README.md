@@ -28,7 +28,17 @@ az login
 
 # Deploy Bicep defined resources in the selected subscription
 ## Other options: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-cli
-az deployment sub create --location "Canada Central" --template-file main.bicep
+az deployment sub create --location canadacentral --template-file main.bicep
+
+```
+
+## Clean Up
+
+Remove created resources. Get the resource group name of the created resource and run this putting in the resource group name.
+
+`az group delete --resource-group "resource-group-to-delete" --yes`
+
+```
 
 ```
 
@@ -38,3 +48,4 @@ az deployment sub create --location "Canada Central" --template-file main.bicep
 
 - [Azure Samples for Adventure Works Database](https://github.com/Azure-Samples/database-templates-sql-adventureworks/blob/main/infra/main.bicep)
 - [Azure SQL Bicep registry module Usage Examples](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/sql/server#Usage-examples)
+
