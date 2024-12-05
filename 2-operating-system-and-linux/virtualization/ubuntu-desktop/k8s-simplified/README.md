@@ -47,7 +47,6 @@ kubectl get node
 
 # View k9s TUI
 k9s
-~~
 ```
 
 - Use `kubectl` to manage the cluster. In the VM, `kubectl`
