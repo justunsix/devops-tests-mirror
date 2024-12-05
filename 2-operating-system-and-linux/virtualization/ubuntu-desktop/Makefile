@@ -11,7 +11,7 @@ run-up-clionly: ## Turn on clionly VM
 	vagrant up clionly
 
 run-cli-all: ## Run the virtual machine as CLI only with all provisioners 
-	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,activate-ansible,nix,nix-home-manager,lazyvim,k3s
+	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,activate-ansible,ansible-for-windows,nix,nix-home-manager,lazyvim,k3s
 
 run-cli-devops: ## Run the virtual machine as CLI only with programs for devops testing
 	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,nix,nix-home-manager,lazyvim,k3s
@@ -20,7 +20,7 @@ run-cli-editor: ## Run the virtual machine as CLI only with minimal programs and
 	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,nix,nix-home-manager,lazyvim
 
 run-cli-ansible-controller: ## Run the virtual machine as CLI only with ansible
-	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-ansible,nix,nix-home-manager
+	vagrant up clionly --provider virtualbox --provision-with main-setup,activate-ansible,ansible-for-windows,nix,nix-home-manager
 
 run-cli-minimal: ## Run the virtual machine as CLI only with minimal programs
 	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager
