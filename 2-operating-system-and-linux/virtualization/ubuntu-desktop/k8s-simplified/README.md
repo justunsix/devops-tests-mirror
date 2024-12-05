@@ -13,7 +13,6 @@ set up to experiment with and develop on any operating system.
 - Installs tools for working with the k8s cluster and
   containers like:
   - kubectl (installs with k3s install)
-  - stern for logs
   - kubectx for contexts, namespaces
   - git
   - docker (installed with vagrant provisioner)

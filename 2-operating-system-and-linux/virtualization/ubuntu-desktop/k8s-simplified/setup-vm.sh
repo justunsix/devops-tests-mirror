@@ -15,16 +15,3 @@ if ! command -v kubectl &>/dev/null; then
   echo -e "-- WARNING, not recommended for production use - k3 Server running in -write-kubeconfig-mode to allow vagrant user read on k3s kubeconfig at /etc/rancher/k3s/k3s.yaml"
 
 fi
-
-# Check if nix already installed, if not, do install
-if ! command -v nix &>/dev/null; then
-  echo -e "-- Installing nix, expect a lot of output"
-
-  # Install nix
-  # multi user installation with --daemon
-  # --yes is to automatically agree to the installation
-  sh <(curl -L https://nixos.org/nix/install) --daemon --yes
-
-  echo -e "-- nix install"
-
-fi

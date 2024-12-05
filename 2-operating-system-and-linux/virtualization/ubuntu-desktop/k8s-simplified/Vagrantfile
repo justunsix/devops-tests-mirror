@@ -26,11 +26,18 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get upgrade -y
     sudo apt install curl -y
+    
+    echo -e "-- Installing Kubernetes tools"
+    sudo snap install kubectx --classic
+    sudo snap install k9s
   SHELL
 
-  # Run script to install k8s components and tools
-  config.vm.provision "main-setup", type: "shell", privileged: false, path: "setup-vm.sh"
-  config.vm.provision "tools-setup", type: "shell", privileged: false, path: "setup-tools.sh"
+  # Run script to install Kubernetes distribution 
+  config.vm.provision "k8s-setup", type: "shell", privileged: false, path: "setup-vm.sh"
+
+  # Optional provisions to use nix to install programs
+  # config.vm.provision "nix-setup", type: "shell", privileged: false, path: "provisioners/setup-nix.sh"
+  # config.vm.provision "tools-setup", type: "shell", privileged: false, path: "provisioners/setup-nix-tools.sh"
   
   config.vm.provision "docker"
 
