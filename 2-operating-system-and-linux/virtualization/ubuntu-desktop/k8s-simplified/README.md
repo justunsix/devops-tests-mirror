@@ -1,12 +1,22 @@
 # About this Virtual Machine (VM)
 
 - Runs a Kubernetes (K8s) instance using [k3s](https://k3s.io/)
-  inside the VM suitable for development
-- Installs tools for working with the k8s cluster like:
+  inside a virtual machine.
+
+## Use Case
+
+Allows you to get started with a small k8s cluster to
+experiment with and develop on any operating system.
+
+## Tooling
+
+- Installs tools for working with the k8s cluster and
+  containers like:
   - kubectl (installs with k3s install)
   - stern for logs
   - kubectx for contexts, namespaces
   - git
+  - docker (installed with vagrant provisioner)
 
 ## Pre-requisites
 
@@ -55,7 +65,9 @@ k9s
 
 ## Extending the VM
 
-If you need more tools and options, see the `Vagrantfile` and
-[README in the parent directory](../README.md). For example
-the parent directory `Vagrantfile` defines tools installed
-in a declarative way using nix.
+- Add ports to the VM to see containers from the host machine
+- Add more tools
+- Use containers in the VM for development
+- If you need more tools and options, see the `Vagrantfile` and
+  [README in the parent directory](../README.md) which offers
+  a modular setup to the VM.
