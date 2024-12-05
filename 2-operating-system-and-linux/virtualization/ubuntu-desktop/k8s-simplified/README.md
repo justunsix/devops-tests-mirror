@@ -58,7 +58,8 @@ k9s
   re-provision the VM with `vagrant reload --provision`.
   For example, you may want to add more tools and shell
   configuration to the VM.
-- `kubectx` will not work by default since the kubeconfig
+- `kubectx` will not work by default since the kubeconfig at
+  `/etc/rancher/k3s/k3s.yaml`
   is only writable by root. Permissions can be changed
   but will be reset on each VM restart.
 
