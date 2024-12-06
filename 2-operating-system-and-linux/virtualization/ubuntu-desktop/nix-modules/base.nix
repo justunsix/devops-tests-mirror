@@ -25,7 +25,10 @@
     # Let home-manager manage shells
     bash = {
       enable = true;
-      initExtra = "nu";
+      initExtra = ''
+      export PATH="$HOME/.local/bin:$PATH"
+      nu'';
+
     };
     # kubectl will use k3s kubectl
     # # k9s will use k3s's kubeconfig
