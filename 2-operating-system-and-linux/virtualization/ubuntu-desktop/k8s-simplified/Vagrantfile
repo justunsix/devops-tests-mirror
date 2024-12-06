@@ -38,6 +38,8 @@ Vagrant.configure("2") do |config|
     wget https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb && apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb
     snap install microk8s --classic
     usermod -a -G microk8s vagrant
+    echo -e "-- Starting microk8s, please wait, this may take some time..."
+    microk8s status --wait-ready
   SHELL
  
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
