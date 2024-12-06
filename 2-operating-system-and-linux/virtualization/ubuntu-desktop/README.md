@@ -45,7 +45,7 @@ vagrant up desktopvm --provider virtualbox --provision-with main-setup,gnome
 # Open VirtualBox to see and use the GUI
 
 # Run the virtual machine as CLI only multiple provisioners
-vagrant up clionly --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,activate-ansible,nix,nix-home-manager,lazyvim,k3s
+vagrant up cli-micro --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,activate-ansible,nix,nix-home-manager,lazyvim,k3s
 # SSH into VM
 vagrant ssh
 
