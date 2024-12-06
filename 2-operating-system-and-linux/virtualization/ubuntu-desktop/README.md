@@ -69,5 +69,6 @@ See the [provisioner folder](./provisioner/) for details.
   - May require some interrupts if it hangs on the Virtualbox additions installation
     - If so, interrupt the `vagrant up` command and run
       `vagrant reload --provision` to continue install
-- For the graphical desktop VM, Virtualbox guest additions may be re-installed during initial boot ups.
+- For the graphical desktop VM, Virtualbox guest additions may be re-installed during
+  initial boot ups.
   If so, reboot until screen scaling and clipboard sharing works.

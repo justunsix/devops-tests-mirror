@@ -93,7 +93,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "main-setup", type: "shell", run: "never", path: "provisioner/main-setup.sh"
 
   config.vm.provision "activate-ansible", type: "shell", run: "never", path: "provisioner/activate-ansible.sh"
-  config.vm.provision "ansible-for-windows", type: "shell", run: "never", privileged: false, path: "provisioner/ansible-for-windows.sh"
 
   config.vm.provision "activate-devops", type: "shell", run: "never", path: "provisioner/activate-devops.sh"
 
