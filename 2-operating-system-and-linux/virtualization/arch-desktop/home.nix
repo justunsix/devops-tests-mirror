@@ -62,29 +62,17 @@
     gcc
     tree-sitter
     ripgrep
-    lazygit    
-    #### nodejs LTS for LSP servers as of 2024-07-08
-    nodejs_20
+    lazygit
+    ### nodejs LTS for LSP servers as of 2024-11
+    nodejs_22
     
     ### Emacs
-    emacs
+    ### emacs
     #### Doom Emacs dependencies
     ##### ripgrep, git, fd installed above
     ##### Shellcheck used by Emacs Flymake for shell scripts by default - Emacs 29.1
-    shellcheck
+    ##### shellcheck
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
 
   ##########################
@@ -156,7 +144,7 @@
         format = "[$indicator ](bold cyan) ";
         disabled = false;
       };
-    };    
+    };
   };
 
   programs.zellij = {
