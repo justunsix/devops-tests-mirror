@@ -52,6 +52,8 @@ kubectl get node
 
 # See all k8s components
 kubectl get all --all-namespaces
+# or use kubectl alias as k
+k get all --all-namespaces
 
 # View k9s TUI
 k9s
