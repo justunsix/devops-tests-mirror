@@ -21,19 +21,37 @@ Vagrant.configure("2") do |config|
   # Provisioners
   ############################################################
 
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
     echo -e "-- Updating system"
-    sudo apt-get update
-    sudo apt-get upgrade -y
-    sudo apt install curl -y
-    
+    apt-get update
+    apt-get upgrade -y
+    echo -e "-- Installing tools"
+    apt install git -y
+
     echo -e "-- Installing Kubernetes tools"
-    sudo snap install kubectx --classic
-    sudo snap install k9s
+    snap install kubectx --classic
+    # k9s install workaround install 'snap install k9s --devmode' works
+    wget https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb && apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb
+    snap install microk8s --classic
+    usermod -a -G microk8s vagrant
+  SHELL
+ 
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    echo -e "-- Setting up user's k8s config"
+
+    # Output microk8s kubeconfig to user's config
+    mkdir -p ~/.kube
+    chmod 0700 ~/.kube
+    microk8s kubectl config view --raw > ~/.kube/config
+
+    # Aliases for convenience
+    echo 'alias kubectl="microk8s kubectl"' >>/home/vagrant/.bashrc
+    echo 'alias k="kubectl"' >>/home/vagrant/.bashrc
+
   SHELL
 
-  # Run script to install Kubernetes distribution 
-  config.vm.provision "k8s-setup", type: "shell", privileged: false, path: "setup-vm.sh"
+  # Run script to install k3s Kubernetes distribution 
+  # config.vm.provision "k8s-setup", type: "shell", privileged: false, path: "setup-k3s.sh"
 
   # Optional provisions to use nix to install programs
   # config.vm.provision "nix-setup", type: "shell", privileged: false, path: "provisioners/setup-nix.sh"

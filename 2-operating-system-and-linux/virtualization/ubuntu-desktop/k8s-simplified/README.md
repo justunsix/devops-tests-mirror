@@ -1,12 +1,12 @@
 # About this Virtual Machine (VM)
 
 - Runs a lightweight Kubernetes (K8s) distribution
-  using [k3s](https://k3s.io/) inside a virtual machine.
+  using [microk8s](https://microk8s.io/) inside a virtual machine.
 
 ## Use Case
 
-Allows you to get started with a lightweight k8s
-set up to experiment with and develop on any operating system.
+Allows you to get started with a lightweight Kubernetes (k8s) distribution
+and set up to experiment with and develop on any operating system.
 
 ## Tooling
 
@@ -43,6 +43,9 @@ Example further commands:
 ```sh
 # See nodes
 kubectl get node
+
+# See all k8s components
+kubectl get all --all-namespaces
 
 # View k9s TUI
 k9s
