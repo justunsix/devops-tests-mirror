@@ -45,10 +45,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     echo -e "-- Setting up user's k8s config"
 
-    # Output microk8s kubeconfig to user's config
+    # Output microk8s kubeconfig to user's config for use
+    # with other programs
     mkdir -p ~/.kube
     chmod 0700 ~/.kube
-    microk8s kubectl config view --raw > ~/.kube/config
+    sudo microk8s kubectl config view --raw > ~/.kube/config
     echo -e "-- kubeconfig set up"
 
     # Aliases for convenience
