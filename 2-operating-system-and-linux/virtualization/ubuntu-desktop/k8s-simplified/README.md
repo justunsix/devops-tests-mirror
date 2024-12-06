@@ -36,6 +36,12 @@ vagrant up
 # SSH into VM
 vagrant ssh
 # Kubernetes will already be running
+
+# Stop Kubernetes to save energy or prepare for shutdown
+microk8s stop
+
+# Start microk8s again, it will also restart on VM reboot
+microk8s start
 ```
 
 Example further commands:
@@ -51,6 +57,9 @@ kubectl get all --all-namespaces
 k9s
 ```
 
+- If `k9s` or `kubectx` commands are not working the k8s,
+  re-run `microk8s kubectl config view --raw > ~/.kube/config`
+  to generate the configuration file.
 - Use `kubectl` to manage the cluster. In the VM, `kubectl`
   is aliased to `k` for convenience.
 - Use `k9s` to browse the cluster, nodes, and other k8s components.
