@@ -41,11 +41,11 @@ Vagrant.configure("2") do |config|
     
   # end
 
-  config.vm.define "clionly", primary: true do |clionly|
-    clionly.vm.box = "archlinux/archlinux"
+  config.vm.define "cli-micro", primary: true do |climicro|
+    climicro.vm.box = "archlinux/archlinux"
 
-    clionly.vm.provider :virtualbox do |vb|
-      vb.name = "ACLI"
+    climicro.vm.provider :virtualbox do |vb|
+      vb.name = "climicro"
     end
   end
 
