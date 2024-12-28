@@ -11,7 +11,7 @@ run-kde: ## Run the virtual machine with KDE
 	vagrant up desktopvm --provider virtualbox --provision-with main-setup,virtualbox-integration,xorg,kde,sound
 
 run-nix: ## Run the virtual machine with Nix packages, no desktop environment
-	vagrant up cli-micro --provider virtualbox --provision-with main-setup,nix,nix-home-manager,astronvim
+	vagrant up cli-micro --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim
 
 run-cli-basic: ## Run the virtual machine with basic CLI only
 	vagrant up cli-micro --provider virtualbox --provision-with main-setup
