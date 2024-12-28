@@ -8,7 +8,7 @@
 # - Added Virtualbox clipboard and drag, drop sharing
 # - Additional comments on script steps
 # - Set localisation per https://wiki.archlinux.org/title/locale
-# - Add sound configuration
+# - Added sound configuration
 
 Vagrant.configure("2") do |config|
 
@@ -18,29 +18,7 @@ Vagrant.configure("2") do |config|
   # VirtualBox Hypervisor Configuration
   ############################################################
 
-  # config.vm.provider "virtualbox" do |vb|
-  #   # https://www.vagrantup.com/docs/providers/virtualbox/configuration
-  #   vb.gui = true
-  #   vb.name = "Archlinux_GUI"
-  #   vb.linked_clone = true
-  #   vb.check_guest_additions = true
-  #   # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-  #   # Video ram in MB, increase to 128 and increase memory to 4096 for more graphical applications like browser
-  #   vb.customize ["modifyvm", :id, "--vram", "64"] 
-  #   vb.memory = 2048
-  #   vb.cpus = 2
-  #   # Enable bidirectional clipboard sharing
-  #   vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
-  #   # Enable bidirectional drag and drop
-  #   vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
-  #   # Enable audio 
-  #   # - dsound for Windows DirectSound, alsa for Linux, or coreaudio for macOS
-  #   vb.customize ["modifyvm", :id, "--audio", "dsound"]
-  #   #vb.customize ["modifyvm", :id, "--audio", "alsa"]
-  #   vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
-    
-  # end
-
+  # For workloads needing 1 CPU, less than 1 GB RAM
   config.vm.define "cli-micro", primary: true do |climicro|
     climicro.vm.box = "archlinux/archlinux"
 
@@ -49,18 +27,20 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # For graphical workloads
   config.vm.define "desktopvm" do |desktopvm|
     desktopvm.vm.box = "archlinux/archlinux"
 
     desktopvm.vm.provider :virtualbox do |vb|
+      # https://www.vagrantup.com/docs/providers/virtualbox/configuration
       vb.gui = true
       vb.name = "Archlinux_GUI"
       vb.linked_clone = true
       vb.check_guest_additions = true
       # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-      # Video ram in MB, increase to 128 and increase memory to 4096 for more graphical applications like browser
-      vb.customize ["modifyvm", :id, "--vram", "64"] 
-      vb.memory = 2048
+      # Video ram in MB, increase from 64 to 128 and increase memory from 2048 to 4096 for more graphical applications like browser
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.memory = 4096
       vb.cpus = 2
       # Enable bidirectional clipboard sharing
       vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
@@ -107,6 +87,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "nix-home-manager", type: "shell", run: "never", privileged: false, path: "provisioner/nix-home-manager.sh"
 
   config.vm.provision "astronvim", type: "shell", run: "never", privileged: false, path: "provisioner/astronvim.sh"
+
+  config.vm.provision "aur", type: "shell", run: "never", privileged: false, path: "provisioner/AUR-helper.sh"
 
   config.vm.provision "emacs-doom", type: "shell", run: "never", privileged: false, path: "provisioner/emacs-doom.sh"
 
