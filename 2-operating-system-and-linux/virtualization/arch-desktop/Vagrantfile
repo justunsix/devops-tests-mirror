@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   # VirtualBox Hypervisor Configuration
   ############################################################
 
-  # For workloads needing 1 CPU, less than 1 GB RAM
+  # For workloads needing 2 CPU, less than 1 GB RAM, Default configuration for image
   config.vm.define "cli-micro", primary: true do |climicro|
     climicro.vm.box = "archlinux/archlinux"
 
