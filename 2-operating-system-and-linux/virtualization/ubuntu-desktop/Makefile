@@ -26,7 +26,7 @@ run-cli-minimal: ## Run the virtual machine as CLI only with minimal programs
 	vagrant up cli-micro --provider virtualbox --provision-with main-setup,nix,nix-home-manager
 
 run-gnome: ## Run the virtual machine with GNOME Desktop
-	vagrant up desktopvm --provider virtualbox --provision-with main-setup,gnome
+	vagrant up desktop-medium --provider virtualbox --provision-with main-setup,gnome
 
 clean: ## Destroy the virtual machine
 	vagrant destroy -f
