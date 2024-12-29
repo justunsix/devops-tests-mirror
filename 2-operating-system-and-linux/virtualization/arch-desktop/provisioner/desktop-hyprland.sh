@@ -13,4 +13,4 @@ pacman -S mesa kitty --noconfirm
 # Agree to replacement
 pacman -S virtualbox-guest-utils-nox --noconfirm
 
-echo -e "-- LazyVim Installed"
+echo -e "-- Hyprland Installed"
