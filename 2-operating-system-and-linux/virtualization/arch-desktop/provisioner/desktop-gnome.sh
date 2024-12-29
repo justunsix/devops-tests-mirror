@@ -9,11 +9,12 @@ pacman --noconfirm -S gnome gdm
 # GNOME on Xorg session
 echo "export XDG_SESSION_TYPE=x11
 export GDK_BACKEND=x11
-exec gnome-session" > /home/vagrant/.xinitrc
-chown vagrant:vagrant /home/vagrant/.xinitrc 
+exec gnome-session > /home/vagrant/.xinitrc
+chown vagrant:vagrant /home/vagrant/.xinitrc
 
 # Start GDM
 systemctl enable gdm
 systemctl start gdm
 
 echo -e "-- Gnome Desktop Installed"
+
