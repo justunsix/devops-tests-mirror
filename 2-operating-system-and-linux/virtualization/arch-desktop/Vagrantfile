@@ -28,10 +28,10 @@ Vagrant.configure("2") do |config|
   end
 
   # For graphical workloads
-  config.vm.define "desktopvm" do |desktopvm|
-    desktopvm.vm.box = "archlinux/archlinux"
+  config.vm.define "desktop-medium" do |desktopmedium|
+    desktopmedium.vm.box = "archlinux/archlinux"
 
-    desktopvm.vm.provider :virtualbox do |vb|
+    desktopmedium.vm.provider :virtualbox do |vb|
       # https://www.vagrantup.com/docs/providers/virtualbox/configuration
       vb.gui = true
       vb.name = "Archlinux_GUI"
@@ -39,18 +39,63 @@ Vagrant.configure("2") do |config|
       vb.check_guest_additions = true
       # v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
       # Video ram in MB, increase from 64 to 128 and increase memory from 2048 to 4096 for more graphical applications like browser
-      vb.customize ["modifyvm", :id, "--vram", "128"]
       vb.memory = 4096
       vb.cpus = 2
+
+      # VirtualBox customize using VBoxManage commands
+      # See https://www.virtualbox.org/manual/ch08.html
+      
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      
       # Enable bidirectional clipboard sharing
       vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
       # Enable bidirectional drag and drop
-      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
-      # Enable audio 
-      # - dsound for Windows DirectSound, alsa for Linux, or coreaudio for macOS
+      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+      # Enable audio:
+      # - dsound for Windows DirectSound
+      # - alsa for Linux
+      # - coreaudio for macOS
+      vb.customize ["modifyvm", :id, "--audio", "dsound"]
+      # vb.customize ["modifyvm", :id, "--audio", "alsa"]
+      vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
+
+    end
+  end
+
+  # Experimental Hyprland GUI Desktop
+  config.vm.define "desktop-large" do |desktoplarge|
+    desktoplarge.vm.box = "archlinux/archlinux"
+
+    desktoplarge.vm.provider :virtualbox do |vb|
+      # https://www.vagrantup.com/docs/providers/virtualbox/configuration
+      vb.gui = true
+      vb.name = "Archlinux_GUI"
+      vb.linked_clone = true
+      vb.check_guest_additions = true
+
+      vb.memory = 8096
+      vb.cpus = 4
+
+      # Enable bidirectional clipboard sharing
+      vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+      # Enable bidirectional drag and drop
+      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+      # Enable audio:
+      # - dsound for Windows DirectSound
+      # - alsa for Linux
+      # - coreaudio for macOS
       vb.customize ["modifyvm", :id, "--audio", "dsound"]
       #vb.customize ["modifyvm", :id, "--audio", "alsa"]
       vb.customize ["modifyvm", :id, "--audiocontroller", "hda"]
+
+      # Optional settings for additional graphical
+      # vmsvga recommended by VirtualBox, needs to be set before
+      # 3D flag below
+      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+      ## 3D Acceleration for use with Hyprland
+      vb.customize ["modifyvm", :id, "--accelerate-3d", "on"]
+      vb.customize ["modifyvm", :id, "--vram", "256"]
+      
     end
   end
 
@@ -92,4 +137,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "emacs-doom", type: "shell", run: "never", privileged: false, path: "provisioner/emacs-doom.sh"
 
-end  
+  config.vm.provision "hyprland", type: "shell", run: "never", path: "provisioner/desktop-hyprland.sh"
+
+end
