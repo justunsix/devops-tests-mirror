@@ -1,0 +1,1 @@
+pacman -Syu vim --noconfirm
