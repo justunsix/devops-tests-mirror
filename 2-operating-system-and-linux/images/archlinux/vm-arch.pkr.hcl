@@ -36,7 +36,8 @@ build {
   # Executes the script using bash
   provisioner "shell" {
     execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
-    script          = "scripts/setup.sh"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/main-setup.sh"
+    # script          = "scripts/setup.sh"
   }
 
   provisioner "shell" {
