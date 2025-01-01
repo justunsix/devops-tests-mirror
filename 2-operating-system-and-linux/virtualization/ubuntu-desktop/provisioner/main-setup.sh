@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-apt-get update
-apt-get upgrade -y
+echo "-- System Updates starting"
 
-echo -e "-- OS Update Complete"
+apt update
+apt upgrade -y
+
+echo -e "-- System Updates complete"

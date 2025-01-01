@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "-- Nix home-manager install starting"
+
 # Check if home-manager already installed, if so skip
 if ! command -v home-manager >/dev/null; then
 
@@ -23,16 +25,18 @@ if ! command -v home-manager >/dev/null; then
   nix-channel --update
   nix-shell '<home-manager>' -A install
 
-  # Remove default and replace with custom home.nix
-  rm /home/vagrant/.config/home-manager/home.nix
+  if [[ -f /vagrant/home.nix ]]; then
+    # Remove default and replace with custom home.nix
+    rm /home/vagrant/.config/home-manager/home.nix
 
-  # Symlink nix configuration
-  ln -s /vagrant/home.nix /home/vagrant/.config/home-manager/home.nix
-  ln -s /vagrant/nix-modules /home/vagrant/.config/home-manager/nix-modules
+    # Symlink nix configuration
+    ln -s /vagrant/home.nix /home/vagrant/.config/home-manager/home.nix
+    ln -s /vagrant/nix-modules /home/vagrant/.config/home-manager/nix-modules
+  fi
 
 fi
 
 # Install programs in home.nix and backup any existing files
 home-manager switch -b backup
 
-echo -e "-- home-manager Installed and Next generation created"
+echo -e "-- Nix home-manager installed and next generation created"
