@@ -5,13 +5,20 @@ help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 .PHONY:
-packer-fmt-and-validate: ## Format and validate packer HCL file
+bento-packer-fmt-and-validate: ## Check Bento packer files
+	cd ~/Code/bento/packer_templates
 	packer fmt .
 	packer validate .
 
-run-ubuntu-lts: ## Build image, overwrite existing build image if present
-	packer build --force --only vagrant.ubuntu-lts vm-ubuntu.pkr.hcl
+.PHONY:
+bento-init-for-build: ## Initialize for build
+	cp ../../virtualization/ubuntu-desktop/provisioner/nix.sh ~/Code/bento/packer_templates/scripts/
+	cp scripts/nix-home-manager.sh ~/Code/bento/packer_templates/scripts/
+	echo "Modify the bento/packer_templates/...pkr.hcl build file for the appropriate image"
+	cd ~/Code/bento/
+	packer init -upgrade ./packer_templates
 
-run-ubuntu-nix: ## Build image, overwrite existing build image if present
-	packer build --force --only vagrant.ubuntu-nix vm-ubuntu.pkr.hcl
-
+.ONESHELL:
+run-bento-ubuntu-24-04: ## Build image for Ubuntu 24.04
+	cd ~/Code/bento/
+	packer build -only="virtualbox-iso.vm" -var-file="os_pkrvars/ubuntu/ubuntu-24.04-x86_64.pkrvars.hcl" ./packer_templates
