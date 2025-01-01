@@ -84,13 +84,6 @@ build {
     inline = ["echo === Provisioning Complete ==="]
   }
 
-  "post-processors": [
-    [
-      {
-        "type": "vagrant"
-      }
-    ]
-  ]
 }
 
 
