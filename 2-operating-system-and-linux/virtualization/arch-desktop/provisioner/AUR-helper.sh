@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-sudo pacman -S --needed git base-devel --noconfirm
+sudo pacman -Sy --needed git base-devel --noconfirm
 cd ~
 git clone https://aur.archlinux.org/yay.git
 cd yay

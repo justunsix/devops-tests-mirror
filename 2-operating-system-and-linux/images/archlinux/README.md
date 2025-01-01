@@ -1,6 +1,16 @@
 # Arch Linux Image Building
 
-Explore building custom Archlinux images
+Builds custom Archlinux images using [packer](https://www.packer.io/).
+
+## Vagrant Images
+
+Images are based on archlinux/archlinux vagrant image.
+
+Includes provisioners for:
+
+- GNOME desktop for a GUI enabled virtual machine (VM)
+- Nix and Nix home-manager
+- AUR helper yay
 
 ## Usage
 

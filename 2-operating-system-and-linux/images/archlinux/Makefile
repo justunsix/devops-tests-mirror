@@ -10,5 +10,5 @@ packer-fmt-and-validate: ## Format and validate packer HCL file
 	packer validate .
 
 run: ## Build image, overwrite existing build image if present
-	packer build --force vm-arch.pkr.hcl
+	packer build --force --only vagrant.arch-nix-aur vm-arch.pkr.hcl
 

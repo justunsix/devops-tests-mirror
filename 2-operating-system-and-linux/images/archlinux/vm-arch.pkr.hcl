@@ -8,7 +8,14 @@ packer {
   }
 }
 
-source "vagrant" "archbox" {
+source "vagrant" "arch-nix-aur" {
+  communicator = "ssh"
+  source_path  = "archlinux/archlinux"
+  provider     = "virtualbox"
+  add_force    = true
+}
+
+source "vagrant" "arch-gui" {
   communicator = "ssh"
   source_path  = "archlinux/archlinux"
   provider     = "virtualbox"
@@ -16,17 +23,10 @@ source "vagrant" "archbox" {
 }
 
 build {
-  sources = ["source.vagrant.archbox"]
-
-  provisioner "shell" {
-    environment_vars = [
-      "FOO=hello world",
-    ]
-    inline = [
-      "echo Adding file to Vagrant box",
-      "echo \"FOO is $FOO\" > example.txt",
-    ]
-  }
+  sources = [
+    "source.vagrant.arch-nix-aur",
+    "source.vagrant.arch-gui"
+  ]
 
   # Commands are run as root
   # Echoes the password 'vagrant'
@@ -37,12 +37,60 @@ build {
   provisioner "shell" {
     execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
     script          = "${path.root}/../../virtualization/arch-desktop/provisioner/main-setup.sh"
-    # script          = "scripts/setup.sh"
   }
 
   provisioner "shell" {
-    inline = ["echo Provisioning Complete"]
+    execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/nix.sh"
+    only            = ["vagrant.arch-nix-aur"]
   }
+
+  # Run as vagrant unprivileged user
+  provisioner "shell" {
+    script = "${path.root}/../../virtualization/arch-desktop/provisioner/AUR-helper.sh"
+    only   = ["vagrant.arch-nix-aur"]
+  }
+
+  provisioner "shell" {
+    script = "${path.root}/../../virtualization/arch-desktop/provisioner/nix-home-manager.sh"
+    only   = ["vagrant.arch-nix-aur"]
+  }
+
+  provisioner "shell" {
+    execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/virtualbox-integration.sh"
+    only            = ["vagrant.arch-gui"]
+  }
+
+  provisioner "shell" {
+    execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/xorg.sh"
+    only            = ["vagrant.arch-gui"]
+  }
+
+  provisioner "shell" {
+    execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/desktop-gnome.sh"
+    only            = ["vagrant.arch-gui"]
+  }
+
+  provisioner "shell" {
+    execute_command = "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script          = "${path.root}/../../virtualization/arch-desktop/provisioner/sound.sh"
+    only            = ["vagrant.arch-gui"]
+  }
+
+  provisioner "shell" {
+    inline = ["echo === Provisioning Complete ==="]
+  }
+
+  "post-processors": [
+    [
+      {
+        "type": "vagrant"
+      }
+    ]
+  ]
 }
 
 
