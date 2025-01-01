@@ -24,9 +24,10 @@ making access to many Linux packages easy.
 
 Minimal virtual machine settings: 2 CPU, 4 GB RAM, Video Ram 128 MB
 
-Login with:
-user name: vagrant
-password: vagrant
+#### Login Username and Password
+
+- Username: vagrant
+- Password: vagrant
 
 ## Usage
 
