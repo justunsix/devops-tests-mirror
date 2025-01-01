@@ -10,12 +10,23 @@ Vagrant image.
 ### arch-nix-aur
 
 Based on [archlinux/archlinux](https://portal.cloud.hashicorp.com/vagrant/discover/archlinux/archlinux)
-Vagrant image with additional installs of Nix, Nix home-manager, and yay.
+Vagrant image with additional installs of Nix, Nix home-manager, and yay AUR Helper
+making access to many Linux packages easy.
 
 ### arch-gui
 
-Based on above Vagrant image with additional installs of GNOME desktop with Xorg,
-VirtualBox Guest Additions integration, and alsa sound.
+Based on [archlinux/archlinux](https://portal.cloud.hashicorp.com/vagrant/discover/archlinux/archlinux)
+Vagrant image with additional installs of GNOME desktop with Xorg,
+VirtualBox Guest Additions integration, and alsa sound for a
+graphical user interface (GUI).
+Also includes Nix, Nix home-manager, and yay AUR Helper
+making access to many Linux packages easy.
+
+Minimal virtual machine settings: 2 CPU, 4 GB RAM, Video Ram 128 MB
+
+Login with:
+user name: vagrant
+password: vagrant
 
 ## Usage
 
