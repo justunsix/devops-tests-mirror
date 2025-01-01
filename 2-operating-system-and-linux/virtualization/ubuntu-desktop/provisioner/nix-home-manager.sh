@@ -4,6 +4,11 @@ set -e
 # Check if home-manager already installed, if so skip
 if ! command -v home-manager >/dev/null; then
 
+  if ! command -v nix-channel >/dev/null; then
+    # Source nix profile, assuming nix is already installed
+    . /etc/profile.d/nix.sh
+  fi
+
   # Add nixpkgs unstable channel
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 
@@ -31,4 +36,3 @@ fi
 home-manager switch -b backup
 
 echo -e "-- home-manager Installed and Next generation created"
-
