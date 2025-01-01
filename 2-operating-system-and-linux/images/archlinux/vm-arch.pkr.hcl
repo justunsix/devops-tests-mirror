@@ -17,7 +17,7 @@ source "vagrant" "arch-nix-aur" {
 
 source "vagrant" "arch-gui" {
   communicator = "ssh"
-  source_path  = "archlinux/archlinux"
+  source_path  = "justunsix/archlinux-nix-aur"
   provider     = "virtualbox"
   add_force    = true
 }

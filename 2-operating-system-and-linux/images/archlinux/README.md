@@ -4,13 +4,18 @@ Builds custom Archlinux images using [packer](https://www.packer.io/).
 
 ## Vagrant Images
 
-Images are based on archlinux/archlinux vagrant image.
+Images are based on [archlinux/archlinux](https://portal.cloud.hashicorp.com/vagrant/discover/archlinux/archlinux)
+Vagrant image.
 
-Includes provisioners for:
+### arch-nix-aur
 
-- GNOME desktop for a GUI enabled virtual machine (VM)
-- Nix and Nix home-manager
-- AUR helper yay
+Based on [archlinux/archlinux](https://portal.cloud.hashicorp.com/vagrant/discover/archlinux/archlinux)
+Vagrant image with additional installs of Nix, Nix home-manager, and yay.
+
+### arch-gui
+
+Based on above Vagrant image with additional installs of GNOME desktop with Xorg,
+VirtualBox Guest Additions integration, and alsa sound.
 
 ## Usage
 
