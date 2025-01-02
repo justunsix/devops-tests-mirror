@@ -13,6 +13,9 @@ run-kde: ## Run the virtual machine with KDE
 run-nix: ## Run the virtual machine with Nix packages, no desktop environment
 	vagrant up cli-micro --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim
 
+run-gnome-prebuilt: ## Run VM with GNOME using prebuilt image
+	vagrant up desktop-medium-pb --provider virtualbox --provision-with nix-home-manager
+
 run-cli-basic: ## Run the virtual machine with basic CLI only
 	vagrant up cli-micro --provider virtualbox --provision-with main-setup
 
