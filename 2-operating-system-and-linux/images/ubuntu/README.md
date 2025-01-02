@@ -8,11 +8,12 @@ Builds custom Ubuntu images using [packer](https://www.packer.io/).
 
 ## Vagrant Images
 
-Images are built using packer tempalte from [bento](https://github.com/chef/bento)
+Images are built using packer templates from [bento](https://github.com/chef/bento)
 
 ### bento-ubuntu-24.04-nix
 
-Based on packer build of [bento/ubuntu-24.04](https://portal.cloud.hashicorp.com/vagrant/discover/bento/ubuntu-24.04)
+Based on [bento packer templates](https://github.com/chef/bento)
+build of [bento/ubuntu-24.04](https://portal.cloud.hashicorp.com/vagrant/discover/bento/ubuntu-24.04)
 Vagrant image with additional installs of:
 
 - [Nix](https://nixos.org/)
@@ -21,7 +22,8 @@ Makes access to many Linux packages easy.
 
 ### bento-ubuntu-24.04-nix-home-manager
 
-Based on packer build of [bento/ubuntu-24.04](https://portal.cloud.hashicorp.com/vagrant/discover/bento/ubuntu-24.04)
+Based on [bento packer templates](https://github.com/chef/bento)
+build of [bento/ubuntu-24.04](https://portal.cloud.hashicorp.com/vagrant/discover/bento/ubuntu-24.04)
 Vagrant image with additional installs of:
 
 - [Nix](https://nixos.org/)
@@ -81,8 +83,9 @@ vagrant up
                 "${path.root}/scripts/_common/vmware_debian_ubuntu.sh",
                 "${path.root}/scripts/_common/parallels.sh",
                 "${path.root}/scripts/${var.os_name}/hyperv_${var.os_name}.sh",
-                # Nix Installation script put after this line
+                # Nix Installation script placed after this line
                 "${path.root}/scripts/nix.sh",
+                # Optional further scripts here
                 "${path.root}/scripts/${var.os_name}/cleanup_${var.os_name}.sh",
                 "${path.root}/scripts/_common/parallels_post_cleanup_debian_ubuntu.sh",
                 "${path.root}/scripts/_common/minimize.sh"
