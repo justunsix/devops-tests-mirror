@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   ############################################################
 
   config.vm.define "k8stest", primary: true do |k8stest|
-    k8stest.vm.box = "ubuntu/jammy64"
+    k8stest.vm.box = "bento/ubuntu-24.04"
 
     k8stest.vm.provider :virtualbox do |vb|
       vb.name = "k8stest"
