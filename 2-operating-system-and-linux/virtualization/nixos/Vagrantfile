@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "nixbox/nixos"
-  config.vm.box_version = "23.11"
+  config.vm.box_version = "24.05"
 
   # Disable shared virtualbox mount path (not vboxsf installed on guest)
   config.vm.synced_folder '.', '/vagrant', disabled: true
