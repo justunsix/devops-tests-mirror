@@ -9,6 +9,18 @@
     ripgrep
     fd
     lazygit
+
+    # Development
+    ## Rust
+    cargo
+    rustc
+    clippy
+    #### Rust watch source like tests
+    # cargo-watch
+    #### Rust LSP
+    rust-analyzer
+    #### Rust formatter
+    rustfmt
   ];
   programs = { };
 }

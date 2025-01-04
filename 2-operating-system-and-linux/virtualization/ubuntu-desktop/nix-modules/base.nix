@@ -11,7 +11,8 @@
     broot
     helix
     fzf
-
+    zellij
+    
     # File Management
     git
 
