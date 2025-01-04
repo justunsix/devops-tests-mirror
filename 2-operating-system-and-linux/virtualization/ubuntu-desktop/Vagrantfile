@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     clismallpb.vm.box = "justunsix/bento-ubuntu-24.04-nix"
 
     clismallpb.vm.provider :virtualbox do |vb|
-      vb.name = "clismall"
+      vb.name = "clismallpb"
       # Allocate memory from 1 GB default to 2 GB for development workload
       vb.memory = "2048"
     end
