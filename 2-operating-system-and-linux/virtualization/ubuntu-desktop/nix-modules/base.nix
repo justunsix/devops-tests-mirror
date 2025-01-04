@@ -8,10 +8,9 @@
     starship
     carapace
     atuin
-    broot
+    yazi
     helix
     fzf
-    zellij
  
     # File Management
     git
