@@ -13,6 +13,9 @@ run-up-cli-micro: ## Turn on cli-micro VM
 run-cli-all: ## Run the virtual machine as CLI only with all provisioners 
 	vagrant up cli-small --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,activate-ansible,nix,nix-home-manager,lazyvim,k3s
 
+run-cli-all-pb: ## Run the virtual machine as CLI using prebuilt box and provisioners for development
+	vagrant up cli-smal-pb --provider virtualbox --provision-with main-setup,activate-editor,nix-home-manager,lazyvim
+
 run-cli-devops: ## Run the virtual machine as CLI only with programs for devops testing
 	vagrant up cli-small --provider virtualbox --provision-with main-setup,activate-editor,activate-devops,nix,nix-home-manager,lazyvim,k3s
 

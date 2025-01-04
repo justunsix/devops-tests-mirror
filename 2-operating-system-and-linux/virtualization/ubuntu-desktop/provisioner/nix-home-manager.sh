@@ -24,6 +24,9 @@ if ! command -v home-manager >/dev/null; then
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
   nix-shell '<home-manager>' -A install
+fi
+
+if command -v home-manager >/dev/null; then
 
   if [[ -f /vagrant/home.nix ]]; then
     # Remove default and replace with custom home.nix
@@ -33,10 +36,9 @@ if ! command -v home-manager >/dev/null; then
     ln -s /vagrant/home.nix /home/vagrant/.config/home-manager/home.nix
     ln -s /vagrant/nix-modules /home/vagrant/.config/home-manager/nix-modules
   fi
+  # Install programs in home.nix and backup any existing files
+  home-manager switch -b backup
 
 fi
-
-# Install programs in home.nix and backup any existing files
-home-manager switch -b backup
 
 echo -e "-- Nix home-manager installed and next generation created"
