@@ -9,18 +9,16 @@
     ripgrep
     fd
     lazygit
+    ### Mason
+    unzip
 
     # Development
-    ## Rust
-    cargo
-    rustc
-    clippy
-    #### Rust watch source like tests
-    # cargo-watch
-    #### Rust LSP
-    rust-analyzer
-    #### Rust formatter
-    rustfmt
+    ## Prettier formatter multi-language
+    nodePackages.prettier
+    ## Node
+    ### LTS as of 2025-01
+    nodejs_22
+
   ];
   programs = { };
 }
