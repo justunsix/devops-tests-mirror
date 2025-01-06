@@ -18,20 +18,22 @@ if [ ! -d "$HOME/Code/dotfiles" ]; then
 fi
 
 # Remove existing lazyvim files for stow to replace them
-rm -rf $HOME/.config/lazyvim/lua/config/autocmds.lua
-rm -rf $HOME/.config/lazyvim/lua/config/keymaps.lua
-rm -rf $HOME/.config/lazyvim/lua/config/lazy.lua
-rm -rf $HOME/.config/lazyvim/lua/config/options.lua
+rm -rf "$HOME"/.config/lazyvim/lua/config/autocmds.lua
+rm -rf "$HOME"/.config/lazyvim/lua/config/keymaps.lua
+rm -rf "$HOME"/.config/lazyvim/lua/config/lazy.lua
+rm -rf "$HOME"/.config/lazyvim/lua/config/options.lua
+rm -rf "$HOME"/.config/lazyvim/lazyvim.json
 
 # Stow ~/Code/dotfiles/ to /home/vagrant/
 echo "Stowing dotfiles"
 cd "$HOME/Code/dotfiles"
+# Unstow existing if present
+stow --target=/home/vagrant/ --delete .
 stow --target=/home/vagrant/ .
 
-# unstow
-# stow --target=/home/justin --delete env
-
 # Install tmux plugin manager
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
 
 echo -e "-- Dotfiles Installed"
