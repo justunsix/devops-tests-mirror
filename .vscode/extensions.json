@@ -2,16 +2,14 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
 	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
 	// List of extensions which should be recommended for users of this workspace.
-	// 
-	// VS Code Data Science Profile Template recommendations are starting with datawrangler 
+	//
+	// VS Code Data Science Profile Template recommendations are starting with datawrangler
 	"recommendations": [
 		"yzhang.markdown-all-in-one",
 		"davidanson.vscode-markdownlint",
 		"ms-python.vscode-pylance",
 		"ban.spellright",
-		"github.copilot-labs",
 		"visualstudioexptteam.vscodeintellicode",
-		"github.copilot",
 		"ms-python.python",
 		"donjayamanne.python-environment-manager",
 		"donjayamanne.python-extension-pack",
@@ -31,7 +29,6 @@
 		"ms-dotnettools.dotnet-interactive-vscode",
 		"hashicorp.terraform",
 		"ms-vscode.powershell",
-		"github.copilot-chat",
 		"mtxr.sqltools"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
