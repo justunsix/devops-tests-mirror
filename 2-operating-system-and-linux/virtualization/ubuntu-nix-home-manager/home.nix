@@ -86,13 +86,12 @@
   # Programs Configuration #
   ##########################
 
+  # Globally enable shell integration for all supported shells
+  home.shell.enableShellIntegration = true;
+
   # Let home-manager manage shells
-  programs.bash = {
-    enable = true;
-  };
-  programs.nushell = {
-    enable = true;
-  };
+  programs.bash = { enable = true; };
+  programs.nushell = { enable = true; };
 
   # Atuin
   programs.atuin = {
@@ -100,7 +99,7 @@
     enableBashIntegration = true;
     enableNushellIntegration = true;
   };
-  
+
   # Broot
   programs.broot = {
     enable = true;

@@ -68,13 +68,12 @@
   # Programs Configuration #
   ##########################
 
+  # Globally enable shell integration for all supported shells
+  home.shell.enableShellIntegration = true;
+
   # Let home-manager manage shells
-  programs.fish = {
-    enable = true;
-  };  
-  programs.nushell = {
-    enable = true;
-  };
+  programs.fish = { enable = true; };
+  programs.nushell = { enable = true; };
 
   # Atuin
   programs.atuin = {
@@ -82,32 +81,32 @@
     enableFishIntegration = true;
     enableNushellIntegration = true;
   };
-  
+
   # Broot
   programs.broot = {
     enable = true;
-    enableFishIntegration = true;    
+    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   # Carapace
   programs.carapace = {
     enable = true;
-    enableFishIntegration = true;    
+    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   # Starship
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;    
+    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   # Zoxide
   programs.zoxide = {
     enable = true;
-    enableFishIntegration = true;    
+    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 

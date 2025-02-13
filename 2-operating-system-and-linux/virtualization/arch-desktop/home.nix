@@ -21,7 +21,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
-    
+
     # Base
     ## Shell
     zoxide
@@ -65,7 +65,7 @@
     lazygit
     ### nodejs LTS for LSP servers as of 2024-11
     nodejs_22
-    
+
     ### Emacs
     ### emacs
     #### Doom Emacs dependencies
@@ -85,9 +85,10 @@
     enable = true;
     initExtra = "nu";
   };
-  programs.nushell = {
-    enable = true;
-  };
+  programs.nushell = { enable = true; };
+
+  # Globally enable shell integration for all supported shells
+  home.shell.enableShellIntegration = true;
 
   programs.atuin = {
     enable = true;
@@ -117,20 +118,14 @@
     enable = true;
     settings = {
       theme = "dracula_at_night";
-      editor = {
-        line-number = "relative";
-      };
+      editor = { line-number = "relative"; };
       editor.cursor-shape = {
         insert = "bar";
         normal = "block";
         select = "underline";
       };
-      editor.soft-wrap = {
-        enable = true;
-      };
-      editor.file-picker = {
-        hidden = false;
-      };
+      editor.soft-wrap = { enable = true; };
+      editor.file-picker = { hidden = false; };
     };
   };
 
@@ -188,9 +183,7 @@
   #
   #  /etc/profiles/per-user/vagrant/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "hx";
-  };
+  home.sessionVariables = { EDITOR = "hx"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

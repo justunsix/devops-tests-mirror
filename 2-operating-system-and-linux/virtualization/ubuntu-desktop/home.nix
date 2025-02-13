@@ -46,6 +46,9 @@ in {
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  # Globally enable shell integration for all supported shells
+  home.shell.enableShellIntegration = true;
+
   # The home.packages option allows you to install Nix packages into 
   # your environment.
   home.packages = baseConfig.packages ++ editorConfig.packages
