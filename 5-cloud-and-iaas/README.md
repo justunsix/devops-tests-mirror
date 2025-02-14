@@ -1,12 +1,13 @@
 # DevOps Infrastructure
 
-Project is used to set up a server to host an application and the DevOps infrastructure (Nexus artifact repository, Jenkins) to support it.
+Project is used to set up a server to host an application and the DevOps
+infrastructure (Nexus artifact repository, Jenkins) to support it.
 
 ## What is Set up
 
 - Set up Ubuntu Linux virtual machine (VM) in Microsoft Azure
- - Set variables set in [`variables.tf`](vm\variables.tf) 
-  - See Usage section below or [`Makefile`](vm/Makefile) on how to set up the VM
+- Set variables set in [`variables.tf`](vm\variables.tf)
+- See Usage section below or [`Makefile`](vm/Makefile) on how to set up the VM
 - Configure VM shell scripts or Ansible
 
 ## Usage
@@ -46,6 +47,6 @@ ssh -i ~/.ssh/azure_vm_key.rsa azureuser@<public_ip_of_VM>
 
 ## See Also
 
-- Folder uses instructions and code templates mainly from [Azure Linux VM Terraform template](https://github.com/Azure/terraform/tree/master/quickstart/101-vm-with-infrastructure) 
-- [Hasicorp Terraform's VM basic SSH example](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/virtual-machines/linux/basic-ssh)
- 
+- Folder uses instructions and code templates mainly from
+  [Azure Linux VM Terraform template](https://github.com/Azure/terraform/tree/master/quickstart/101-vm-with-infrastructure)
+- [Hashicorp Terraform's VM basic SSH example](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/virtual-machines/linux/basic-ssh)
