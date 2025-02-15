@@ -25,7 +25,7 @@ sudo pkg install -y nushell #Other packages as needed
 su
 # Install pkg and a different shell and doas
 # (administrator delegated rights) command
-pkg install -y nushellw doas
+pkg install -y nushell doas
 vi /usr/local/etc/doas.conf.example
 # Allow vagrant user to execute root command
 
@@ -39,3 +39,4 @@ doas pkg install -y helix git stow helix broot yazi starship carapace atuin broo
 
 - [Official Vagrant FreeBSD Images](https://forums.freebsd.org/threads/official-vagrant-freebsd-images.52717/)
 - [Vagrantfile - FreeBSD - GitHub Gist](https://gist.github.com/jwhulette/76d37c084b29941eae3a21311abffb75)
+- [FreeBSD Quickstart Guide for Linux Users](https://docs.freebsd.org/en/articles/linux-users/)
