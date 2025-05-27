@@ -46,6 +46,10 @@
     fzf
     fd
 
+    ## Starship prompt, eza nerd font
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+
     # File Management
     git
     vcstool
@@ -88,7 +92,7 @@
   programs.nushell = { enable = true; };
 
   # Globally enable shell integration for all supported shells
-  home.shell.enableShellIntegration = true;
+  # home.shell.enableShellIntegration = true;
 
   programs.atuin = {
     enable = true;
@@ -142,16 +146,15 @@
     };
   };
 
-  programs.zellij = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
     enableNushellIntegration = true;
   };
+
+  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env
+  # per https://github.com/nix-community/home-manager/issues/605
+  fonts.fontconfig = { enable = true; };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
