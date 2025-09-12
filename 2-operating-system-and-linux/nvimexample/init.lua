@@ -1,5 +1,11 @@
 print("Advent of neovim hello world")
 
+require("config.lazy")
+
+-- Configure Neovim options
+-- Indentation
+vim.opt.shiftwidth = 4
+
 -- Source current file
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
 -- Run selections

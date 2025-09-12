@@ -6,13 +6,24 @@ with [supporting repository](https://github.com/tjdevries/advent-of-nvim/)
 
 ## Usage
 
-See `Makefile` for setup and copying configuration files to
-Neovim example configuration folder
-
 ```shell
 
 # Run nvimexample configuration
-VIM_APPNAME=nvimexample nvim
+NVIM_APPNAME=nvimexample nvim
 
-
+# Go to configuration directory to edit init.lua
+# For Windows see Makefile
+# This directory is for Linux
+cd ~/.config/nvimexample
+NVIM_APPNAME=nvimexample nvim init.lua
 ```
+
+See `Makefile` for setup and copying configuration files to
+Neovim example configuration folder using `make install`.
+
+Run `make install` after making Neovim configuration
+changes to file in this repository.
+
+Put plugins you want to use in the `lua/config/plugins` folder.
+
+`after` lua files will be loaded after Neovim defaults. `after/ftplugin` sets file type plugins that are loaded for certain file types.
