@@ -21,10 +21,18 @@ setup: ## Setup folders if they do not already exist
 install: setup ## Copy Neovim example configuration to configuration folders
 	folder=${CONFIG_FOLDER_NIX}
 	if [ -d /c/Users ]; then
-		folder=${CONFIG_FOLDER_WINDOWS}	
+		folder=${CONFIG_FOLDER_WINDOWS}
+		cp -r ./* $$folder
+	else
+		# Use stow
+		if command -v stow &>/dev/null; then
+			cd ..
+			stow -t $$folder nvimexample
+		else
+			echo "Error: Install stow to symlink Neovim configuration files"
+		fi
 	fi
-	cp -r ./* $$folder
 	cd $$folder
-	printf "\nCopied data to:\n"
+	printf "\nCopied/Symlinked data to:\n"
 	pwd
 	ls -al
