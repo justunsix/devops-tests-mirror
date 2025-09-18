@@ -44,13 +44,13 @@ variable "source_image_publisher" {
 variable "source_image_offer" {
   description = "The offer of the source image"
   type        = string
-  default     = "0001-com-ubuntu-server-jammy"
+  default     = "ubuntu-24_04-lts"
 }
 
 variable "source_image_sku" {
-  description = "The SKU of the source image"
+  description = "The SKU of the source image or source image plan"
   type        = string
-  default     = "22_04-lts-gen2"
+  default     = "ubuntu-pro"
 }
 
 variable "source_image_version" {
