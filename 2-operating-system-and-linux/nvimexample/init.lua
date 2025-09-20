@@ -15,17 +15,21 @@ vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
 vim.keymap.set("n", "<space>x", ":.lua<CR>")
 vim.keymap.set("v", "<space>x", ":lua<CR>")
 
+-- Quickfix list movement
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
+
 -- Autocommands
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 -- ### Begin nvim-mini setup and mini.nvim modules
@@ -38,9 +42,9 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- Safely execute immediately
 now(function()
-	vim.o.termguicolors = true
+    vim.o.termguicolors = true
 end)
 now(function()
-	require("mini.statusline").setup()
+    require("mini.statusline").setup()
 end)
 -- ### End nvim-mini setup and mini.nvim modules
