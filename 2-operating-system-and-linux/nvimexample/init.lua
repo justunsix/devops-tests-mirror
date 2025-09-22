@@ -66,7 +66,10 @@ end)
 require("config.lazy")
 
 -- ## File Navigation
-require("oil").setup()
+require("files").setup()
+
+-- ## Completion
+require("completion").setup()
 
 -- ## nvim-mini setup and modules including: status line
 -- Set up 'mini.deps' (customize to your liking)
