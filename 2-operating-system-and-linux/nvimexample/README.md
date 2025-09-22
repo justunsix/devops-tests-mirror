@@ -18,12 +18,13 @@ cd ~/.config/nvimexample
 NVIM_APPNAME=nvimexample nvim init.lua
 ```
 
-See `Makefile` for setup and copying configuration files to
-Neovim example configuration folder using `make install`.
+See `Makefile` for setup and copying configuration files to Neovim example
+configuration folder using `make install`.
 
-Run `make install` after making Neovim configuration
-changes to file in this repository.
+Run `make install` after making Neovim configuration changes to file in this
+repository.
 
 Put plugins you want to use in the `lua/config/plugins` folder.
 
-`after` lua files will be loaded after Neovim defaults. `after/ftplugin` sets file type plugins that are loaded for certain file types.
+`after` lua files will be loaded after Neovim defaults. `after/ftplugin` sets
+file type plugins that are loaded for certain file types.
