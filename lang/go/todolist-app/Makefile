@@ -9,3 +9,7 @@ build: ## Build project
 
 run: ## Run project
 	go run main.go
+
+test-web-api: ## Test web api
+	curl localhost:8080
+	curl localhost:8080/show-tasks
