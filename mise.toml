@@ -1,0 +1,3 @@
+[tools]
+"github:hashicorp/vagrant" = "2.4.10.dev+000759-0b7d460a"
+terraform = "latest"
