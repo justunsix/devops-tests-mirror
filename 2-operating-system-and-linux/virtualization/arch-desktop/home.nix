@@ -52,7 +52,6 @@
 
     # File Management
     git
-    vcstool
     stow
 
     # Productivity
