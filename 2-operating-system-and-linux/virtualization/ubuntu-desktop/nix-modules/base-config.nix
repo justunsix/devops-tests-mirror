@@ -1,14 +1,15 @@
-{ config, pkgs }: {
+{ config, pkgs }:
+{
   packages = with pkgs; [
 
   ];
 
   programs = {
-     bash = {
+    bash = {
       enable = true;
       initExtra = ''
-      export PATH="$HOME/.local/bin:$PATH"
-      nu'';
+        export PATH="$HOME/.local/bin:$PATH"
+        nu'';
 
     };
     # kubectl will use k3s kubectl
@@ -46,14 +47,20 @@
       settings = {
         # In SSH, limited colour support, so use base16
         theme = "base16_default";
-        editor = { line-number = "relative"; };
+        editor = {
+          line-number = "relative";
+        };
         editor.cursor-shape = {
           insert = "bar";
           normal = "block";
           select = "underline";
         };
-        editor.soft-wrap = { enable = true; };
-        editor.file-picker = { hidden = false; };
+        editor.soft-wrap = {
+          enable = true;
+        };
+        editor.file-picker = {
+          hidden = false;
+        };
       };
     };
     starship = {
@@ -83,5 +90,3 @@
 
   };
 }
-
-
