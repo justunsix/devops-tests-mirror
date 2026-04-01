@@ -5,7 +5,7 @@ help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 run: ## Run the virtual machine as CLI only
-	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim,azure-cli,docker,aws-cli,k3s
+	vagrant up clionly --provider virtualbox --provision-with main-setup,nix,nix-home-manager,lazyvim,azure-cli,aws-cli,k3s
 
 run-up-cli-micro: ## Turn on cli-micro VM
 	vagrant up cli-micro
