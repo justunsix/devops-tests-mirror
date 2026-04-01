@@ -3,6 +3,6 @@ set -e
 
 # Creation of virtualenvs like for
 # projects and Neovim Mason installs
-apt install python3.12-venv
+apt install python3-venv -y
 
 echo 'INSTALL_EDITOR="true"' | sudo tee -a /etc/environment
