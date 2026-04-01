@@ -7,6 +7,22 @@ Vagrant.configure("2") do |config|
   # VirtualBox Hypervisor Configuration
   ############################################################
 
+  # For workloads needing 2 CPU, 4 GB RAM
+  config.vm.define "cli-medium", primary: true do |climedium|
+    climedium.vm.box = "bento/ubuntu-24.04"
+
+    climedium.vm.provider :virtualbox do |vb|
+      vb.name = "climedium"
+      # Assign CPUs
+      vb.cpus = "2"
+      # Allocate memory from 1 GB default to 2 GB
+      vb.memory = "4096"
+  
+      # Increase timeout as first boot can take time
+      climedium.vm.boot_timeout = 1000
+    end
+  end
+
   # For workloads needing 1 CPU, 2 GB RAM
   config.vm.define "cli-small", primary: true do |clismall|
     clismall.vm.box = "ubuntu/jammy64"
@@ -21,18 +37,18 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # For workloads needing 1 CPU, 2 GB RAM
-  config.vm.define "cli-small-pb", primary: true do |clismallpb|
-    clismallpb.vm.box = "justunsix/bento-ubuntu-24.04-nix"
+  # For workloads needing 1 CPU, 2 GB RAM, prebuilt (pb) image
+  config.vm.define "cli-medium-pb", primary: true do |climediumpb|
+    climediumpb.vm.box = "justunsix/bento-ubuntu-24.04-nix"
 
-    clismallpb.vm.provider :virtualbox do |vb|
-      vb.name = "clismallpb"
+    climediumpb.vm.provider :virtualbox do |vb|
+      vb.name = "climediumpb"
       # Allocate memory from 1 GB default to 2 GB for development workload
       vb.memory = "2048"
     end
 
     # Increase timeout as first boot can take time
-    clismallpb.vm.boot_timeout = 700
+    climediumpb.vm.boot_timeout = 1000
   end
 
   # For workloads needing 1 CPU, 1 GB RAM (default Ubuntu image settings)
@@ -42,6 +58,8 @@ Vagrant.configure("2") do |config|
     climicro.vm.provider :virtualbox do |vb|
       vb.name = "climicro"
     end
+    # Increase timeout as first boot can take time
+    climicro.vm.boot_timeout = 1000
   end
 
   # Source of desktop config: 
@@ -55,7 +73,7 @@ Vagrant.configure("2") do |config|
       # Allocate memory
       vb.memory = "4096"
       # Assign CPUs
-      vb.cpus = "2"
+      vb.cpus = "4"
       # Enable GUI
       vb.gui = true
       # Specify graphics controller
@@ -99,9 +117,9 @@ Vagrant.configure("2") do |config|
   ############################################################
 
   # If exists, mount ~/Code from Host to vagrant's $HOME/Code/
-  # if File.directory?(File.expand_path("#{ENV['HOME']}/Code"))
-  #   config.vm.synced_folder "#{ENV['HOME']}/Code", "/home/vagrant/Code/"
-  # end
+  if File.directory?(File.expand_path("#{ENV['HOME']}/Code"))
+    config.vm.synced_folder "#{ENV['HOME']}/Code", "/home/vagrant/Code/"
+  end
   
   # If exists, copy ~/.ssh from Host to vagrant
   # if File.directory?(File.expand_path("#{ENV['HOME']}/.ssh"))
