@@ -66,8 +66,7 @@
     tree-sitter
     ripgrep
     lazygit
-    ### nodejs LTS for LSP servers as of 2024-11
-    nodejs_22
+    nodejs
 
     ### Emacs
     ### emacs
@@ -88,7 +87,9 @@
     enable = true;
     initExtra = "nu";
   };
-  programs.nushell = { enable = true; };
+  programs.nushell = {
+    enable = true;
+  };
 
   # Globally enable shell integration for all supported shells
   # home.shell.enableShellIntegration = true;
@@ -121,14 +122,20 @@
     enable = true;
     settings = {
       theme = "dracula_at_night";
-      editor = { line-number = "relative"; };
+      editor = {
+        line-number = "relative";
+      };
       editor.cursor-shape = {
         insert = "bar";
         normal = "block";
         select = "underline";
       };
-      editor.soft-wrap = { enable = true; };
-      editor.file-picker = { hidden = false; };
+      editor.soft-wrap = {
+        enable = true;
+      };
+      editor.file-picker = {
+        hidden = false;
+      };
     };
   };
 
@@ -153,7 +160,9 @@
 
   # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env
   # per https://github.com/nix-community/home-manager/issues/605
-  fonts.fontconfig = { enable = true; };
+  fonts.fontconfig = {
+    enable = true;
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -185,7 +194,9 @@
   #
   #  /etc/profiles/per-user/vagrant/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { EDITOR = "hx"; };
+  home.sessionVariables = {
+    EDITOR = "hx";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -1,4 +1,5 @@
-{ config, pkgs }: {
+{ config, pkgs }:
+{
   packages = with pkgs; [
 
     neovim
@@ -9,15 +10,15 @@
     ripgrep
     fd
     lazygit
-    ### Mason
+    tree-sitter
+    ### Needed by Mason
     unzip
 
     # Development
     ## Prettier formatter multi-language
-    nodePackages.prettier
+    prettier
     ## Node
-    ### LTS as of 2025-01
-    nodejs_22
+    nodejs
 
   ];
   programs = { };
