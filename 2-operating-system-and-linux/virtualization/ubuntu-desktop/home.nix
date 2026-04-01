@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  pkgs = import <nixpkgs> { };
   lib = pkgs.lib;
 
   installEditor = builtins.getEnv "INSTALL_EDITOR" == "true";
@@ -12,26 +11,33 @@ let
   baseConfig = import ./nix-modules/base.nix { inherit config pkgs; };
 
   # Conditional packages and programs
-  editorConfig = if installEditor then
-    import ./nix-modules/editor.nix { inherit config pkgs; }
-  else {
-    packages = [ ];
-    programs = { };
-  };
-  devopsConfig = if installDevOps then
-    import ./nix-modules/devops.nix { inherit config pkgs; }
-  else {
-    packages = [ ];
-    programs = { };
-  };
-  ansibleConfig = if installAnsible then
-    import ./nix-modules/ansible.nix { inherit config pkgs; }
-  else {
-    packages = [ ];
-    programs = { };
-  };
+  editorConfig =
+    if installEditor then
+      import ./nix-modules/editor.nix { inherit config pkgs; }
+    else
+      {
+        packages = [ ];
+        programs = { };
+      };
+  devopsConfig =
+    if installDevOps then
+      import ./nix-modules/devops.nix { inherit config pkgs; }
+    else
+      {
+        packages = [ ];
+        programs = { };
+      };
+  ansibleConfig =
+    if installAnsible then
+      import ./nix-modules/ansible.nix { inherit config pkgs; }
+    else
+      {
+        packages = [ ];
+        programs = { };
+      };
 
-in {
+in
+{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "vagrant";
@@ -49,10 +55,10 @@ in {
   # Globally enable shell integration for all supported shells
   home.shell.enableShellIntegration = true;
 
-  # The home.packages option allows you to install Nix packages into 
+  # The home.packages option allows you to install Nix packages into
   # your environment.
-  home.packages = baseConfig.packages ++ editorConfig.packages
-    ++ devopsConfig.packages ++ ansibleConfig.packages;
+  home.packages =
+    baseConfig.packages ++ editorConfig.packages ++ devopsConfig.packages ++ ansibleConfig.packages;
 
   # Merge programs configurations
   programs = lib.mkMerge [
