@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "freebsd/FreeBSD-14.1-STABLE"
+  config.vm.box = "bento/freebsd-14.3"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
   config.vm.disk :disk, size: "20GB", primary: true 
-  config.vm.synced_folder "../scripts", "/scripts"
+  config.vm.synced_folder "../scripts", "/home/vagrant/scripts"
   config.vm.provider "virtualbox" do |vb|
   end
 
@@ -40,4 +40,7 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  config.vm.provision "base", type: "shell", privileged: true, path: "../scripts/base.sh"
+  config.vm.provision "dotfiles", type: "shell", privileged: false, path: "../scripts/dotfiles.sh"
 end

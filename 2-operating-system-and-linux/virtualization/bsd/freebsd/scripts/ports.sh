@@ -1,3 +1,4 @@
+# https://docs.freebsd.org/en/books/handbook/ports/#ports-using-installation-methods
 pkg install -y git
 git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
 
