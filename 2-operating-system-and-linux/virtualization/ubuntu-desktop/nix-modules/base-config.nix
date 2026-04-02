@@ -67,20 +67,6 @@
       enable = true;
       enableBashIntegration = true;
       enableNushellIntegration = true;
-      settings = {
-        # format = "$all";
-        shell = {
-          format = "[$indicator ](bold cyan) ";
-          disabled = false;
-        };
-        # https://starship.rs/config/#kubernetes
-        kubernetes = {
-          disabled = false;
-          # Only show the module in directories that contain a k8s file
-          detect_files = [ "k8s" ];
-          #        symbol = "k8s ";
-        };
-      };
     };
     zoxide = {
       enable = true;
