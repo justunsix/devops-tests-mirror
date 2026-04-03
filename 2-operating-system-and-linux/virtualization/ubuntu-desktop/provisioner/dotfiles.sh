@@ -1,39 +1,30 @@
-#!/bin/bash
 set -e
 
-# Create repositories for dotfiles
-# and make sure stow will not symlink
-# certain directories by creating them first
-if [ ! -d "$HOME/Code/dotfiles" ]; then
+echo "-- Dotfiles and LazyVim Installs Starting"
 
-  echo "Cloning dotfiles repo"
-  # Directory to store dotfiles and other projects
-  mkdir -p "$HOME/Code"
-  cd ~/Code
-  git clone https://github.com/justunsix/dotfiles.git
+DOTFILES_DIR="$HOME/.dots/dotfiles"
 
-  echo "Creating tmux plugins directory"
-  mkdir -p "$HOME/.config/tmux/plugins"
+rm -rf ~/.config
+rm -rf "$HOME/.dots/dotfiles"
+git clone https://github.com/justunsix/dotfiles.git "$DOTFILES_DIR"
+git clone https://github.com/LazyVim/starter ~/.config/nvim-lazyvim
+rm -f "$HOME/.config/nvim-lazyvim/lua/config/autocmds.lua"
+rm -f "$HOME/.config/nvim-lazyvim/lua/config/keymaps.lua"
+rm -f "$HOME/.config/nvim-lazyvim/lua/config/lazy.lua"
+rm -f "$HOME/.config/nvim-lazyvim/lua/config/options.lua"
+rm -f "$HOME/.bashrc"
+rm -f "$HOME/.bash_profile"
 
-fi
+cd "$HOME/.dots" || exit
+stow -t ~ dotfiles
 
-# Remove existing lazyvim files for stow to replace them
-rm -rf "$HOME"/.config/lazyvim/lua/config/autocmds.lua
-rm -rf "$HOME"/.config/lazyvim/lua/config/keymaps.lua
-rm -rf "$HOME"/.config/lazyvim/lua/config/lazy.lua
-rm -rf "$HOME"/.config/lazyvim/lua/config/options.lua
-rm -rf "$HOME"/.config/lazyvim/lazyvim.json
+config_nu_nix="$DOTFILES_DIR/.config/nushell/config-nix.nu"
+config_nu="$DOTFILES_DIR/.config/nushell/config.nu"
+config_env="$DOTFILES_DIR/.config/nushell/env.nu"
 
-# Stow ~/Code/dotfiles/ to /home/vagrant/
-echo "Stowing dotfiles"
-cd "$HOME/Code/dotfiles"
-# Unstow existing if present
-stow --target=/home/vagrant/ --delete .
-stow --target=/home/vagrant/ .
+# Delete existing lines in nu config with unneeded programs
+sed -i '/broot/d' "$config_nu_nix"
+sed -i '/mise/d' "$config_nu"
+sed -i '/mise/d' "$config_env"
 
-# Install tmux plugin manager
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-fi
-
-echo -e "-- Dotfiles Installed"
+echo "-- Dotfiles and LazyVim install complete"

@@ -7,7 +7,6 @@ echo "-- Nix install starting"
 if ! command -v nix &>/dev/null; then
 
   # Install nix
-  apt install curl -y
   # multi user installation with --daemon
   # --yes is to automatically agree to the installation
   # Workaround for Syntax error: unexpected "("` issue per:
