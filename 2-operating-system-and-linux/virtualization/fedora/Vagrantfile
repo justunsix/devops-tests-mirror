@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  ############################################################
+  # VirtualBox Hypervisor Configuration
+  ############################################################
+
+  # For workloads needing 2 CPU, 4 GB RAM
+  config.vm.define "cli-medium-fedora", primary: true do |climediumfedora|
+    climediumfedora.vm.box = "bento/fedora-latest"
+
+    climediumfedora.vm.provider :virtualbox do |vb|
+      vb.name = "climediumfedora"
+      # Assign CPUs
+      vb.cpus = "2"
+      # Allocate memory from 1 GB default to 2 GB
+      vb.memory = "4096"
+
+      # Increase timeout as first boot can take time
+      climediumfedora.vm.boot_timeout = 1000
+    end
+  end
+
+  ############################################################
+  # Mount repositories from the host
+  ############################################################
+
+  # If exists, copy ~/.ssh from Host to vagrant
+  # if File.directory?(File.expand_path("#{ENV['HOME']}/.ssh"))
+  #   config.vm.provision "file", run: "always", source: "#{ENV['HOME']}/.ssh", destination: "~/.ssh"
+  # end
+
+  ############################################################
+  # Provisioners
+  ############################################################
+
+  # OS updates
+  config.vm.provision "main", type: "shell", run: "never", privileged: true, path: "provisioner/main.sh"
+
+  # Packages to install
+  config.vm.provision "programs", type: "shell", run: "never", privileged: true, path: "provisioner/programs.sh"
+
+  # Set up dotfiles
+  config.vm.provision "dotfiles", type: "shell", run: "never", privileged: false, path: "provisioner/dotfiles.sh"
+
+  config.vm.synced_folder "provisioner", "/home/vagrant/provisioner"
+
+end
